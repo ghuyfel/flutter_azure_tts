@@ -1,3 +1,7 @@
+## 0.0.3
+
+* Downgraded to json_serializable 4.1.4
+
 ## 0.0.2
 
 * Removed flutter dependencies
