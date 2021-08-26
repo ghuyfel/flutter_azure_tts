@@ -10,9 +10,9 @@ Initialise the framework with your Region and Subscription key
   await AzureTts.init(
       subscriptionKey: "YOUR SUBSCRIPTION KEY",
       region: "YOUR REGION");
-```dart
+```
 
-Get the list of all available voices. And pick a voice to read the text.
+//Get the list of all available voices. And pick a voice to read the text.
 
 ```dart
 // Get available voices
