@@ -12,7 +12,7 @@ Initialise the framework with your Region and Subscription key
       region: "YOUR REGION");
 ```
 
-//Get the list of all available voices. And pick a voice to read the text.
+Get the list of all available voices. And pick a voice to read the text.
 
 ```dart
 // Get available voices
