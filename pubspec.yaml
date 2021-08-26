@@ -1,29 +1,31 @@
 name: flutter_azure_tts
 description: Flutter implementation of Microsoft Azure Cognitives Text-To-Speech
-version: 0.0.1
-homepage:
+version: 0.0.2
+homepage: https://github.com/ghuyfel/flutter_azure_tts
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=1.17.0"
+#  flutter: ">=1.17.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
-  http:
-  json_serializable:
-  build_runner:
-  equatable:
+#  flutter:
+#    sdk: flutter
+  http: ^0.13.3
+  json_serializable:  ^5.0.0
+  json_annotation:  ^4.0.1
+  build_runner: ^2.1.0
+  equatable: ^2.0.3
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
+  test: ^1.16.5
+#  flutter_test:
+#    sdk: flutter
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
-flutter:
+#flutter:
 
   # To add assets to your package, add an assets section, like this:
   # assets:
