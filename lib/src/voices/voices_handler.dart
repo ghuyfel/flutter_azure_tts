@@ -22,7 +22,9 @@ class VoicesHandler {
     final mapper = VoicesResponseMapper();
     final response = await _client.get(Uri.parse(Endpoints.voicesList));
     final voicesResponse = mapper.map(response);
-    if(voicesResponse is VoicesSuccess) return voicesResponse;
-    else throw AzureException(response: voicesResponse);
+    if (voicesResponse is VoicesSuccess)
+      return voicesResponse;
+    else
+      throw AzureException(response: voicesResponse);
   }
 }

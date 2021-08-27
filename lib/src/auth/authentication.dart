@@ -14,10 +14,13 @@ class Authentication {
     final authClient = AuthClient(client: client, authHeader: header);
     final response = await authClient.post(Uri.parse(Endpoints.issueToken));
 
-    if(response.statusCode == 200) {
+    if (response.statusCode == 200) {
       return TokenSuccess(token: response.body);
     } else {
-      return TokenFailure(code: response.statusCode, reason: response.reasonPhrase ?? "Something went wrong: ${response.body}");
+      return TokenFailure(
+          code: response.statusCode,
+          reason: response.reasonPhrase ??
+              "Something went wrong: ${response.body}");
     }
   }
 }

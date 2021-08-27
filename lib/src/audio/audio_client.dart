@@ -4,8 +4,12 @@ import 'package:flutter_azure_tts/src/common/base_client.dart';
 import 'package:http/http.dart' as http;
 
 class AudioClient extends BaseClient {
-  AudioClient({required http.Client client, required BearerAuthenticationHeader authHeader, required AudioTypeHeader audioTypeHeader})
-      : _audioTypeHeader = audioTypeHeader, super(client: client, header: authHeader);
+  AudioClient(
+      {required http.Client client,
+      required BearerAuthenticationHeader authHeader,
+      required AudioTypeHeader audioTypeHeader})
+      : _audioTypeHeader = audioTypeHeader,
+        super(client: client, header: authHeader);
   final AudioTypeHeader _audioTypeHeader;
 
   @override

@@ -12,7 +12,6 @@ import 'package:http/http.dart' as http;
 import 'audio_type_header.dart';
 
 class AudioHandler {
-
   Future<AudioResponse> getAudio(AudioRequestParams params) async {
     final mapper = AudioResponseMapper();
     final audioClient = AudioClient(

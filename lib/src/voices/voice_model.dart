@@ -40,6 +40,15 @@ class Voice extends Equatable {
   Map<String, dynamic> toJson() => _$VoiceToJson(this);
 
   @override
-  List<Object?> get props => [name, displayName, localName, shortName, gender, locale, sampleRateHertz, voiceType, status];
-
+  List<Object?> get props => [
+        name,
+        displayName,
+        localName,
+        shortName,
+        gender,
+        locale,
+        sampleRateHertz,
+        voiceType,
+        status
+      ];
 }

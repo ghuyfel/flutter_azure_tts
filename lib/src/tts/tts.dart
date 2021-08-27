@@ -14,14 +14,15 @@ class Tts {
   static final VoicesHandler _voicesHandler = VoicesHandler();
   static bool _initialised = false;
 
-  static Future<bool> init({required String region, required String subscriptionKey}) async {
+  static Future<bool> init(
+      {required String region, required String subscriptionKey}) async {
     EquatableConfig.stringify = true;
     Config.init(endpointRegion: region, endpointSubKey: subscriptionKey);
     _initialised = await _authHandler.init();
     return _initialised;
   }
 
-  static Future<VoicesResponse> getAvailableVoices() async{
+  static Future<VoicesResponse> getAvailableVoices() async {
     final response = await _voicesHandler.getVoices();
     return response;
   }

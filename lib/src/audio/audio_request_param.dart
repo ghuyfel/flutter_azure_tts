@@ -5,5 +5,6 @@ class AudioRequestParams {
   final String text;
   final String audioFormat;
 
-  AudioRequestParams({required this.voice, required this.text, required this.audioFormat});
+  AudioRequestParams(
+      {required this.voice, required this.text, required this.audioFormat});
 }
