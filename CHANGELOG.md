@@ -1,3 +1,7 @@
+## 0.0.5
+
+* Added toString method to AzureException
+
 ## 0.0.4
 
 * Upgraded build_runner to 2.1.1
