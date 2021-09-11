@@ -7,9 +7,10 @@ Flutter implementation of [Microsoft Azure Cognitive Text-To-Speech API](https:/
 Initialise the framework with your Region and Subscription key
 
 ```dart
-  await AzureTts.init(
+  AzureTts.init(
       subscriptionKey: "YOUR SUBSCRIPTION KEY",
-      region: "YOUR REGION");
+      region: "YOUR REGION",
+      withLogs: true); // enable logs
 ```
 
 Get the list of all available voices. And pick a voice to read the text.
