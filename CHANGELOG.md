@@ -1,3 +1,10 @@
+## 0.1.0 
+
+* Removed async on initialisation. 
+* Added withLogs field when initialising.
+* Fixed auth token expiring issue.
+* Updated dart docs.
+
 ## 0.0.6
 
 * Added toString method to all Azure related exceptions
