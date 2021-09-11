@@ -4,7 +4,9 @@ import 'package:flutter_azure_tts/src/tts/tts_params.dart';
 
 void main() async {
   AzureTts.init(
-      subscriptionKey: "YOUR SUBSCRIPTION KEY", region: "YOUR REGION");
+      subscriptionKey: "YOUR SUBSCRIPTION KEY",
+      region: "YOUR REGION",
+      withLogs: true);
 
   // Get available voices
   final voicesResponse = await AzureTts.getAvailableVoices() as VoicesSuccess;
