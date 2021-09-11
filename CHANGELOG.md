@@ -1,3 +1,7 @@
+## 0.1.1
+
+* Fix for bug where could not initialisation throws exception.
+
 ## 0.1.0 
 
 * Removed async on initialisation. 
