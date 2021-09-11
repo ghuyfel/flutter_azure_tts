@@ -29,7 +29,10 @@ class Tts {
   ///
   /// **withLogs** : (optional) enable logs. *true* by default
   ///
-  static void init({required String region, required String subscriptionKey, bool withLogs = true}) =>
+  static void init(
+          {required String region,
+          required String subscriptionKey,
+          bool withLogs = true}) =>
       _init(region, subscriptionKey, withLogs);
 
   ///Get available voices on the Azure Endpoint Region
@@ -94,5 +97,6 @@ class Tts {
         audioHandler: _audioHandler);
   }
 
-  static void _initLogs(bool withLogs) => withLogs ? Log.enable() : Log.disable();
+  static void _initLogs(bool withLogs) =>
+      withLogs ? Log.enable() : Log.disable();
 }
