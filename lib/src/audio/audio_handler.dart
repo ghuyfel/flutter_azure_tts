@@ -27,7 +27,7 @@ class AudioHandler {
     if (voicesResponse is AudioSuccess)
       return voicesResponse;
     else {
-      print("[flutter_Azure_tts] $voicesResponse");
+      print("[flutter_azure_tts] $voicesResponse");
       throw AzureException(response: voicesResponse);
     }
   }
