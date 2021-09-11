@@ -1,34 +1,102 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_azure_tts/flutter_azure_tts.dart';
 import 'package:flutter_azure_tts/src/audio/audio_handler.dart';
 import 'package:flutter_azure_tts/src/audio/audio_responses.dart';
+import 'package:flutter_azure_tts/src/auth/auth_client.dart';
 import 'package:flutter_azure_tts/src/auth/auth_handler.dart';
+import 'package:flutter_azure_tts/src/auth/auth_response_mapper.dart';
+import 'package:flutter_azure_tts/src/auth/authentication_types.dart';
+import 'package:flutter_azure_tts/src/common/config.dart';
+import 'package:flutter_azure_tts/src/common/respository.dart';
 import 'package:flutter_azure_tts/src/tts/tts_params.dart';
+import 'package:flutter_azure_tts/src/utils/log.dart';
 import 'package:flutter_azure_tts/src/voices/voices.dart';
 import 'package:flutter_azure_tts/src/voices/voices_handler.dart';
+import 'package:http/http.dart' as http;
 
-import '../common/config.dart';
-
+///Helper class for Azure Cognitive TTS requests
 class Tts {
-  static final AuthHandler _authHandler = AuthHandler();
+  static late final AuthHandler _authHandler;
   static final AudioHandler _audioHandler = AudioHandler();
   static final VoicesHandler _voicesHandler = VoicesHandler();
-  static bool _initialised = false;
+  static late final repo;
 
-  static Future<bool> init(
-      {required String region, required String subscriptionKey}) async {
+  /// Should be called first before any other call is made.
+  ///
+  /// **region** : Azure endpoint region
+  ///
+  /// **subscriptionKey** : Azure subscription key
+  ///
+  /// **withLogs** : (optional) enable logs. *true* by default
+  ///
+  static void init(
+          {required String region,
+          required String subscriptionKey,
+          bool withLogs = true}) =>
+      _init(region, subscriptionKey, withLogs);
+
+  ///Get available voices on the Azure Endpoint Region
+  ///
+  ///Returns [VoicesResponse]
+  ///
+  /// [VoicesSuccess] request succeeded
+  ///
+  /// On failure returns one of the following:
+  /// [VoicesFailedBadRequest], [VoicesFailedBadRequest], [VoicesFailedUnauthorized],
+  /// [VoicesFailedTooManyRequests], [VoicesFailedBadGateWay], [VoicesFailedUnkownError]
+  ///
+  ///Throws an [AzureException] if something goes wrong.
+  static Future<VoicesResponse> getAvailableVoices() async {
+    return repo.getAvailableVoices();
+  }
+
+  ///Get audio for transcription
+  ///
+  /// [ttsParams] request parameters
+  ///
+  /// Returns [AudioResponse]
+  ///
+  /// [AudioSuccess] request succeeded
+  ///
+  /// On failure returns one of the following:
+  /// [AudioFailedBadRequest], [AudioFailedUnauthorized], [AudioFailedUnsupported], [AudioFailedTooManyRequest],
+  /// [AudioFailedBadGateway], [AudioFailedBadGateway], [AudioFailedUnkownError]
+  ///
+  static Future<AudioResponse> getTts(TtsParams ttsParams) async {
+    return repo.getTts(ttsParams);
+  }
+
+  static void _init(String region, String subscriptionKey,
+      [bool withLogs = true]) {
     EquatableConfig.stringify = true;
     Config.init(endpointRegion: region, endpointSubKey: subscriptionKey);
-    _initialised = await _authHandler.init();
-    return _initialised;
+    _initAuthManager();
+    _initRepository();
+    _initLogs(withLogs);
+    Log.d("package initialised");
   }
 
-  static Future<VoicesResponse> getAvailableVoices() async {
-    final response = await _voicesHandler.getVoices();
-    return response;
+  static void _initAuthManager() {
+    final client = http.Client();
+
+    final authHeader = SubscriptionKeyAuthenticationHeader(
+        subscriptionKey: Config.subscriptionKey);
+
+    final authClient = AuthClient(client: client, authHeader: authHeader);
+
+    final authResponseMapper = AuthResponseMapper();
+
+    _authHandler =
+        AuthHandler(authClient: authClient, mapper: authResponseMapper);
   }
 
-  static Future<AudioResponse> getTts(TtsParams ttsParams) async {
-    final response = await _audioHandler.getAudio(ttsParams);
-    return response;
+  static void _initRepository() {
+    repo = Repository(
+        authHandler: _authHandler,
+        voicesHandler: _voicesHandler,
+        audioHandler: _audioHandler);
   }
+
+  static void _initLogs(bool withLogs) =>
+      withLogs ? Log.enable() : Log.disable();
 }
