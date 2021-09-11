@@ -12,18 +12,48 @@ export '/src/common/common.dart';
 export "/src/tts/tts_params.dart";
 
 class AzureTts {
-  ///Initialises the framework. Throws an [AzureException] on failure.
-  static Future<bool> init(
+  ///Initialises the framework.
+  ///
+  /// **region** : Azure endpoint region
+  ///
+  /// **subscriptionKey** : Azure subscription key
+  ///
+  /// **withLogs** : (optional) enable logs. *true* by default
+  ///
+  ///Throws an [AzureException] on failure.
+  static void init(
       {required String subscriptionKey, required String region}) async {
-    return Tts.init(region: region, subscriptionKey: subscriptionKey);
+    Tts.init(region: region, subscriptionKey: subscriptionKey);
   }
 
-  ///Returns available voices. Throws an [AzureException] on failure.
+  ///Get available voices on the Azure Endpoint Region
+  ///
+  ///Returns [VoicesResponse]
+  ///
+  /// [VoicesSuccess] request succeeded
+  ///
+  /// On failure returns one of the following:
+  /// [VoicesFailedBadRequest], [VoicesFailedBadRequest], [VoicesFailedUnauthorized],
+  /// [VoicesFailedTooManyRequests], [VoicesFailedBadGateWay], [VoicesFailedUnkownError]
+  ///
+  ///Throws an [AzureException] if something goes wrong.
   static Future<VoicesResponse> getAvailableVoices() async {
     return Tts.getAvailableVoices();
   }
 
-  ///Converts text to speech and return audio file as [Uint8List]. Throws an [AzureException] on failure.
+  ///Converts text to speech and return audio file as [Uint8List].
+  ///
+  /// [ttsParams] request parameters
+  ///
+  /// Returns [AudioResponse]
+  ///
+  /// [AudioSuccess] request succeeded
+  ///
+  /// On failure returns one of the following:
+  /// [AudioFailedBadRequest], [AudioFailedUnauthorized], [AudioFailedUnsupported], [AudioFailedTooManyRequest],
+  /// [AudioFailedBadGateway], [AudioFailedBadGateway], [AudioFailedUnkownError]
+  ///
+  ///Throws an [AzureException] if something goes wrong.
   static Future<AudioResponse> getTts(TtsParams params) async {
     return Tts.getTts(params);
   }
