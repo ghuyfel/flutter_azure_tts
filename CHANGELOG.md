@@ -1,3 +1,7 @@
+## 0.0.6
+
+* Added toString method to all Azure related exceptions
+
 ## 0.0.5
 
 * Added toString method to AzureException
