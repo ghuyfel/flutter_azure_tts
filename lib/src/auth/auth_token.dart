@@ -9,7 +9,7 @@ class AuthToken {
 
   @override
   String toString() {
-    final map = Map<String,String>();
+    final map = Map<String, String>();
     map['expiry_date'] = expiryDate.toString();
     map['token'] = token;
     return map.toString();
