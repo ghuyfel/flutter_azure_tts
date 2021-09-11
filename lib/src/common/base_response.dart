@@ -4,4 +4,9 @@ abstract class BaseResponse {
   BaseResponse({required this.code, required this.reason});
   final String reason;
   final int code;
+
+  @override
+  String toString() {
+    return "$code: $reason";
+  }
 }

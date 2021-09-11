@@ -26,7 +26,9 @@ class AudioHandler {
     final voicesResponse = mapper.map(response) as AudioResponse;
     if (voicesResponse is AudioSuccess)
       return voicesResponse;
-    else
+    else {
+      print("[flutter_Azure_tts] $voicesResponse");
       throw AzureException(response: voicesResponse);
+    }
   }
 }
