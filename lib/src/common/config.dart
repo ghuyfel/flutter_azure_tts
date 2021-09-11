@@ -1,5 +1,8 @@
+import 'package:flutter_azure_tts/src/auth/auth_token.dart';
+
+///Holds all configurations
 class Config {
-  static String token = "";
+  static AuthToken? authToken;
 
   Config._();
 
@@ -9,6 +12,7 @@ class Config {
   ///Region identifier i.e. [centralus]
   static late final String region;
 
+  ///Initialise the config by setting endpoint region and subscription key
   static void init(
       {required String endpointRegion, required String endpointSubKey}) {
     region = endpointRegion;

@@ -10,7 +10,7 @@ abstract class AuthenticationTypeHeader extends BaseHeader {
 
 ///Authentication using Authorisation header type.
 ///
-/// *Note: the [token] must be refreshed every 9 minutes*.
+/// *Note: the [authToken] must be refreshed every 9 minutes*.
 class BearerAuthenticationHeader extends AuthenticationTypeHeader {
   BearerAuthenticationHeader({required String token})
       : super(type: "Authorization", value: token);
