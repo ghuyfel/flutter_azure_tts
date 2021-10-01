@@ -1,3 +1,8 @@
+## 0.1.2
+
+* Upgraded json_serializable to 5.0.2.
+* Upgraded build_runner to 2.1.4.
+
 ## 0.1.1
 
 * Fix for bug where could not initialisation throws exception.
