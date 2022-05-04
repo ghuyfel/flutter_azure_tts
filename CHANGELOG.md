@@ -1,3 +1,7 @@
+## 0.1.3
+
+* Added prosody rate to TtsParams.
+
 ## 0.1.2
 
 * Upgraded json_serializable to 5.0.2.
