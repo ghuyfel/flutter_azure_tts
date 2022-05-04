@@ -2,6 +2,19 @@ import 'package:flutter_azure_tts/src/audio/audio_request_param.dart';
 import 'package:flutter_azure_tts/src/voices/voices.dart';
 
 class TtsParams extends AudioRequestParams {
-  TtsParams({required Voice voice, required String audioFormat, required text})
-      : super(audioFormat: audioFormat, text: text, voice: voice);
+  /// Rate is the speed at which the voice will speak.
+  ///
+  /// * `rate` default to 1.
+
+  TtsParams({
+    required Voice voice,
+    required String audioFormat,
+    required text,
+    double? rate,
+  }) : super(
+          audioFormat: audioFormat,
+          text: text,
+          voice: voice,
+          rate: rate,
+        );
 }
