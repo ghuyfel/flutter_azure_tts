@@ -18,7 +18,8 @@ class AudioHandler {
         authHeader: BearerAuthenticationHeader(token: Config.authToken!.token),
         audioTypeHeader: AudioTypeHeader(audioFormat: params.audioFormat));
 
-    final ssml = Ssml(voice: params.voice, text: params.text);
+    final ssml =
+        Ssml(voice: params.voice, text: params.text, speed: params.rate ?? 1);
 
     final response = await audioClient.post(Uri.parse(Endpoints.audio),
         body: ssml.buildSsml);
