@@ -1,3 +1,7 @@
+## 0.1.4
+
+* Updated Readme file to show prosody rate in example.
+
 ## 0.1.3
 
 * Added prosody rate to TtsParams.
