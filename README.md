@@ -30,7 +30,11 @@ Request audio file.
 ```dart
   final text = "Microsoft Speech Service Text-to-Speech API";
 
-  TtsParams params = TtsParams(voice: voice, audioFormat: AudioOutputFormat.audio16khz32kBitrateMonoMp3, text: text);
+TtsParams params = TtsParams(
+    voice: voice,
+    audioFormat: AudioOutputFormat.audio16khz32kBitrateMonoMp3,
+    rate: 1.5, // optional prosody rate (default is 1.0)
+    text: text);
   
   final ttsResponse = await AzureTts.getTts(params) as AudioSuccess;
 ```
