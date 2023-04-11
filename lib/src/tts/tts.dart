@@ -16,9 +16,9 @@ class Tts {
   static late final AuthHandler _authHandler;
   static final AudioHandler _audioHandler = AudioHandler();
   static final VoicesHandler _voicesHandler = VoicesHandler();
-  static late final repo;
+  static late final Repository repo;
 
-  /// Should be called first before any other call is made.
+  /// MUST be called first before any other call is made.
   ///
   /// **region** : Azure endpoint region
   ///
@@ -34,16 +34,14 @@ class Tts {
 
   ///Get available voices on the Azure Endpoint Region
   ///
-  ///Returns [VoicesResponse]
+  ///Returns [VoicesSuccess]
   ///
   /// [VoicesSuccess] request succeeded
   ///
-  /// On failure returns one of the following:
+  /// On failure throws one of the following:
   /// [VoicesFailedBadRequest], [VoicesFailedBadRequest], [VoicesFailedUnauthorized],
-  /// [VoicesFailedTooManyRequests], [VoicesFailedBadGateWay], [VoicesFailedUnkownError]
-  ///
-  ///Throws an [AzureException] if something goes wrong.
-  static Future<VoicesResponse> getAvailableVoices() async {
+  /// [VoicesFailedTooManyRequests], [VoicesFailedBadGateWay], [VoicesFailedUnkownError] or [AzureException]
+  static Future<VoicesSuccess> getAvailableVoices() async {
     return repo.getAvailableVoices();
   }
 
@@ -59,7 +57,7 @@ class Tts {
   /// [AudioFailedBadRequest], [AudioFailedUnauthorized], [AudioFailedUnsupported], [AudioFailedTooManyRequest],
   /// [AudioFailedBadGateway], [AudioFailedBadGateway], [AudioFailedUnkownError]
   ///
-  static Future<AudioResponse> getTts(TtsParams ttsParams) async {
+  static Future<AudioSuccess> getTts(TtsParams ttsParams) async {
     return repo.getTts(ttsParams);
   }
 
