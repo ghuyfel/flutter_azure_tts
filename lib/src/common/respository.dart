@@ -31,7 +31,7 @@ class Repository {
   /// On failure returns one of the following:
   /// [VoicesFailedBadRequest], [VoicesFailedBadRequest], [VoicesFailedUnauthorized],
   /// [VoicesFailedTooManyRequests], [VoicesFailedBadGateWay], [VoicesFailedUnkownError]
-  Future<VoicesResponse> getAvailableVoices() async {
+  Future<VoicesSuccess> getAvailableVoices() async {
     await assureTokenIsValid();
     return await voicesHandler.getVoices();
   }
@@ -40,15 +40,14 @@ class Repository {
   ///
   /// [ttsParams] request parameters
   ///
-  /// Returns [AudioResponse]
+  /// Returns [AudioSuccess]
   ///
   /// [AudioSuccess] request succeeded
   ///
   /// On failure returns one of the following:
   /// [AudioFailedBadRequest], [AudioFailedUnauthorized], [AudioFailedUnsupported], [AudioFailedTooManyRequest],
-  /// [AudioFailedBadGateway], [AudioFailedBadGateway], [AudioFailedUnkownError]
-  ///
-  Future<AudioResponse> getTts(TtsParams ttsParams) async {
+  /// [AudioFailedBadGateway], [AudioFailedBadGateway], [AudioFailedUnkownError] or [AzureException]
+  Future<AudioSuccess> getTts(TtsParams ttsParams) async {
     await assureTokenIsValid();
     return await audioHandler.getAudio(ttsParams);
   }

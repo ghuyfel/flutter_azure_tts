@@ -11,18 +11,27 @@ import 'package:http/http.dart' as http;
 import 'audio_type_header.dart';
 
 class AudioHandler {
-  Future<AudioResponse> getAudio(AudioRequestParams params) async {
+  Future<AudioSuccess> getAudio(AudioRequestParams params) async {
     final mapper = AudioResponseMapper();
     final audioClient = AudioClient(
         client: http.Client(),
         authHeader: BearerAuthenticationHeader(token: Config.authToken!.token),
         audioTypeHeader: AudioTypeHeader(audioFormat: params.audioFormat));
 
-    final ssml =
-        Ssml(voice: params.voice, text: params.text, speed: params.rate ?? 1);
+    try {
+      final ssml =
+          Ssml(voice: params.voice, text: params.text, speed: params.rate ?? 1);
 
-    final response = await audioClient.post(Uri.parse(Endpoints.audio),
-        body: ssml.buildSsml);
-    return mapper.map(response) as AudioResponse;
+      final response = await audioClient.post(Uri.parse(Endpoints.audio),
+          body: ssml.buildSsml);
+      final audioResponse =  mapper.map(response);
+      if(audioResponse is AudioSuccess) {
+        return audioResponse;
+      } else {
+        throw audioResponse;
+      }
+    } catch (e) {
+      rethrow;
+    }
   }
 }
