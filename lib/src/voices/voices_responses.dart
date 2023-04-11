@@ -12,11 +12,11 @@ class VoicesSuccess extends VoicesResponse {
 }
 
 class VoicesFailedBadRequest extends VoicesResponse {
-  VoicesFailedBadRequest()
+  VoicesFailedBadRequest({String? reasonPhrase})
       : super(
             code: 400,
             reason:
-                "Bad Request	A required parameter is missing, empty, or null. Or, the value passed to either a required or optional parameter is invalid. A common issue is a header that is too long.");
+                "Bad Request	A required parameter is missing, empty, or null. Or, the value passed to either a required or optional parameter is invalid. A common issue is a header that is too long. ${reasonPhrase ?? ''}");
 }
 
 class VoicesFailedUnauthorized extends VoicesResponse {

@@ -1,3 +1,13 @@
+## 0.1.6
+
+* getAvailableVoices now only returns VoicesSuccess and throws an exception otherwise
+* getTts now only returns AudioSuccess and throws an exception otherwise
+* VoicesFailedBadRequest now includes more details in the reason field.
+* AudioFailedBadRequest now includes more details in the reason field.
+
+## 0.1.5
+ 
+ 
 ## 0.1.4
 
 * Updated Readme file to show prosody rate in example.

@@ -31,16 +31,14 @@ class AzureTts {
 
   ///Get available voices on the Azure Endpoint Region
   ///
-  ///Returns [VoicesResponse]
+  ///Returns [VoicesSuccess]
   ///
   /// [VoicesSuccess] request succeeded
   ///
-  /// On failure returns one of the following:
-  /// [VoicesFailedBadRequest], [VoicesFailedBadRequest], [VoicesFailedUnauthorized],
-  /// [VoicesFailedTooManyRequests], [VoicesFailedBadGateWay], [VoicesFailedUnkownError]
-  ///
-  ///Throws an [AzureException] if something goes wrong.
-  static Future<VoicesResponse> getAvailableVoices() async {
+  /// On failure throws one of the following:
+  /// [VoicesFailedBadRequest], [VoicesFailedUnauthorized],
+  /// [VoicesFailedTooManyRequests], [VoicesFailedBadGateWay], [VoicesFailedUnkownError] or [AzureException]
+  static Future<VoicesSuccess> getAvailableVoices() async {
     return Tts.getAvailableVoices();
   }
 
@@ -57,7 +55,7 @@ class AzureTts {
   /// [AudioFailedBadGateway], [AudioFailedBadGateway], [AudioFailedUnkownError]
   ///
   ///Throws an [AzureException] if something goes wrong.
-  static Future<AudioResponse> getTts(TtsParams params) async {
+  static Future<AudioSuccess> getTts(TtsParams params) async {
     return Tts.getTts(params);
   }
 }

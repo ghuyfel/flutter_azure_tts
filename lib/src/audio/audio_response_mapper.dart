@@ -10,7 +10,7 @@ class AudioResponseMapper extends BaseResponseMapper {
       case 200:
         return AudioSuccess(audio: response.bodyBytes);
       case 400:
-        return AudioFailedBadRequest();
+        return AudioFailedBadRequest(reasonPhrase: response.reasonPhrase);
       case 401:
         return AudioFailedUnauthorized();
       case 415:

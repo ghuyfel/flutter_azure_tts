@@ -19,7 +19,7 @@ class VoicesResponseMapper extends BaseResponseMapper {
           return VoicesSuccess(voices: voices);
         }
       case 400:
-        return VoicesFailedBadRequest();
+        return VoicesFailedBadRequest(reasonPhrase: response.reasonPhrase);
       case 401:
         return VoicesFailedUnauthorized();
       case 429:
