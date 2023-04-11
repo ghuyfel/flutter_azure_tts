@@ -8,21 +8,21 @@ class Voice extends Equatable {
   @JsonKey(name: "Name")
   final String name;
   @JsonKey(name: "DisplayName")
-  String displayName;
+  final String displayName;
   @JsonKey(name: "LocalName")
-  String localName;
+  final String localName;
   @JsonKey(name: "ShortName")
-  String shortName;
+  final String shortName;
   @JsonKey(name: "Gender")
-  String gender;
+  final String gender;
   @JsonKey(name: "Locale")
-  String locale;
+  final String locale;
   @JsonKey(name: "SampleRateHertz")
-  String sampleRateHertz;
+  final String sampleRateHertz;
   @JsonKey(name: "VoiceType")
-  String voiceType;
+  final String voiceType;
   @JsonKey(name: "Status")
-  String status;
+  final String status;
 
   Voice(
       {required this.name,
