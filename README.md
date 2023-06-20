@@ -45,3 +45,14 @@ Request audio file.
   //Get the audio bytes.
   final audioBytes = ttsResponse.audio.buffer.asByteData(); // you can save these bytes to a file for later playback
 ```
+
+You can also optionally specify a speech style, for voices that support them:
+
+```dart
+TtsParams params = TtsParams(
+    voice: voice,
+    audioFormat: AudioOutputFormat.audio16khz32kBitrateMonoMp3,
+    text: text,
+    style: 'cheerful',
+);
+```
