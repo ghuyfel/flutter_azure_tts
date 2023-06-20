@@ -54,5 +54,6 @@ TtsParams params = TtsParams(
     audioFormat: AudioOutputFormat.audio16khz32kBitrateMonoMp3,
     text: text,
     style: 'cheerful',
+    styleDegree: 1.5, // optional intensity of the style (0.01 - 2.0)
 );
 ```

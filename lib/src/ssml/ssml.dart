@@ -7,6 +7,7 @@ class Ssml {
     required this.speed,
     this.style,
     this.role,
+    this.styleDegree,
   });
 
   final Voice voice;
@@ -14,6 +15,7 @@ class Ssml {
   final double speed;
   final String? style;
   final String? role;
+  final double? styleDegree;
 
   @override
   String toString() => buildSsml;
@@ -26,6 +28,7 @@ class Ssml {
         "xml:gender='${voice.gender}' "
         "${style != null ? "xml:style='$style' " : ""}"
         "${role != null ? "xml:role='$role' " : ""}"
+        "${styleDegree != null ? "xml:styledegree='$styleDegree' " : ""}"
         "name='${voice.shortName}'>"
         "<prosody rate='$speed'>"
         "$text"

@@ -12,5 +12,6 @@ class TtsParams extends AudioRequestParams {
     super.rate,
     super.style,
     super.role,
+    super.styleDegree,
   });
 }

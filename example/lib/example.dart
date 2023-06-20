@@ -1,12 +1,13 @@
 // Generate with a random German voice: example.dart -v de- -t 'Hallo, wie gehts?'
 // List all English voices with style options: example.dart -v en- -l -x
 // Generate two audio files with different styles: example.dart -v en- -s shouting,whispering
-
+// Generate four audio files with various levels of excitement: example.dart -s excited -d 0.01,0.5,1.0,2.0
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:args/args.dart';
 import 'package:flutter_azure_tts/flutter_azure_tts.dart';
 
+// You can also pass these with -k and -e
 const _azureKey = 'YOUR_AZURE_KEY';
 const _azureRegion = 'YOUR_AZURE_REGION';
 
@@ -42,6 +43,13 @@ final _parser = ArgParser()
         'e.g. \'cheerful,sad\'; don\'t use spaces.',
   )
   ..addOption(
+    'styledegrees',
+    abbr: 'd',
+    help: 'The degree to which to apply the style. '
+        'An optional, comma-delimited list of style degrees '
+        'e.g. \'1.5\', or \'0.5,0.8\'; don\'t use spaces.',
+  )
+  ..addOption(
     'outprefix',
     abbr: 'o',
     help: 'A prefix that will be applied to output file names.',
@@ -57,7 +65,18 @@ final _parser = ArgParser()
     abbr: 'x',
     help: 'Filters out voices that don\'t havev any styles. '
         'Useful when combined with -l for finding voices.',
+  )
+  ..addOption(
+    'key',
+    abbr: 'k',
+    help: 'Your Azure key',
+  )
+  ..addOption(
+    'region',
+    abbr: 'e',
+    help: 'Your Azure region',
   );
+
 void main(List<String> argss) async {
   final args = _parser.parse(argss);
   if (args['help']) {
@@ -66,8 +85,8 @@ void main(List<String> argss) async {
   }
 
   AzureTts.init(
-    subscriptionKey: _azureKey,
-    region: _azureRegion,
+    subscriptionKey: args['key'] ?? _azureKey,
+    region: args['region'] ?? _azureRegion,
     withLogs: true,
   );
 
@@ -89,6 +108,8 @@ void main(List<String> argss) async {
       voices.removeWhere((e) => e.styles == null || !e.styles!.contains(style));
     }
   }
+  List<double?> styleDegrees =
+      args['styledegrees']?.split(',').map<double>((e) => double.parse(e)).toList() ?? [null];
 
   if (voices.isEmpty) {
     print(
@@ -110,17 +131,21 @@ void main(List<String> argss) async {
 
   List<Future> futures = [];
   for (final style in styles) {
-    final f = _generateTtsAudio(
-      voice: voice,
-      text: args['text'],
-      rate: double.parse(args['rate']),
-      style: style,
-    ).then((data) => _writeFile(
-          '${args['outprefix'] ?? ''}${voice.shortName}'
-          '${style != null ? '_$style' : ''}.mp3',
-          data,
-        ));
-    futures.add(f);
+    for (final degree in styleDegrees) {
+      final f = _generateTtsAudio(
+              voice: voice,
+              text: args['text'],
+              rate: double.parse(args['rate']),
+              style: style,
+              degree: degree)
+          .then((data) => _writeFile(
+                '${args['outprefix'] ?? ''}${voice.shortName}'
+                '${style != null ? '_$style' : ''}'
+                '${degree != null ? '_$degree' : ''}.mp3',
+                data,
+              ));
+      futures.add(f);
+    }
   }
   await Future.wait(futures);
   print('Done!');
@@ -132,6 +157,7 @@ Future<Uint8List> _generateTtsAudio({
   required String text,
   double rate = 1.0,
   String? style,
+  double? degree,
 }) async {
   TtsParams params = TtsParams(
     voice: voice,
@@ -139,9 +165,11 @@ Future<Uint8List> _generateTtsAudio({
     rate: rate, // optional prosody rate (default is 1.0)
     text: text,
     style: style,
+    styleDegree: degree,
   );
   final ttsResponse = await AzureTts.getTts(params);
-  print('Generated audio for voice ${voice.shortName} with style $style');
+  print('Generated audio for voice ${voice.shortName} with style $style'
+      ', degree $degree');
   return ttsResponse.audio;
 }
 
