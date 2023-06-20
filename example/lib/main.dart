@@ -1,14 +1,13 @@
 import 'package:flutter_azure_tts/flutter_azure_tts.dart';
-import 'package:flutter_azure_tts/src/audio/audio_output_format.dart';
-import 'package:flutter_azure_tts/src/tts/tts_params.dart';
 
 void main() async {
   try {
     //Load configs
     AzureTts.init(
-        subscriptionKey: "YOUR SUBSCRIPTION KEY",
-        region: "YOUR REGION",
-        withLogs: true);
+      subscriptionKey: "YOUR SUBSCRIPTION KEY",
+      region: "YOUR REGION",
+      withLogs: true,
+    );
 
     // Get available voices
     final voicesResponse = await AzureTts.getAvailableVoices();
@@ -35,10 +34,8 @@ void main() async {
     final ttsResponse = await AzureTts.getTts(params);
 
     //Get the audio bytes.
-    final audioBytes = ttsResponse.audio.buffer
-        .asByteData(); // you can save to a file for playback
-    print(
-        "Audio size: ${(audioBytes.lengthInBytes / (1024 * 1024)).toStringAsPrecision(2)} Mb");
+    final audioBytes = ttsResponse.audio.buffer.asByteData(); // you can save to a file for playback
+    print("Audio size: ${(audioBytes.lengthInBytes / (1024 * 1024)).toStringAsPrecision(2)} Mb");
   } catch (e) {
     print("Something went wrong: $e");
   }

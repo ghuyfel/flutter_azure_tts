@@ -4,12 +4,20 @@ class AudioRequestParams {
   final Voice voice;
   final String text;
   final String audioFormat;
-  double? rate;
+  final double? rate;
+  final String? style;
+  final String? role;
 
-  AudioRequestParams({
+  /// A number between 0.01 and 2.0. The degree to which to apply [style].
+  final double? styleDegree;
+
+  const AudioRequestParams({
     required this.voice,
     required this.text,
     required this.audioFormat,
     this.rate,
+    this.style,
+    this.role,
+    this.styleDegree,
   });
 }

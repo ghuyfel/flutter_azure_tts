@@ -19,11 +19,16 @@ class AudioHandler {
         audioTypeHeader: AudioTypeHeader(audioFormat: params.audioFormat));
 
     try {
-      final ssml =
-          Ssml(voice: params.voice, text: params.text, speed: params.rate ?? 1);
+      final ssml = Ssml(
+        voice: params.voice,
+        text: params.text,
+        speed: params.rate ?? 1,
+        style: params.style,
+        role: params.role,
+        styleDegree: params.styleDegree,
+      );
 
-      final response = await audioClient.post(Uri.parse(Endpoints.audio),
-          body: ssml.buildSsml);
+      final response = await audioClient.post(Uri.parse(Endpoints.audio), body: ssml.buildSsml);
       final audioResponse = mapper.map(response);
       if (audioResponse is AudioSuccess) {
         return audioResponse;
