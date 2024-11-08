@@ -1,4 +1,4 @@
-# flutter_azure_tts
+# azure_tts
 
 Flutter implementation of [Microsoft Azure Cognitive Text-To-Speech API](https://azure.microsoft.com/en-us/services/cognitive-services/text-to-speech/#features).
 

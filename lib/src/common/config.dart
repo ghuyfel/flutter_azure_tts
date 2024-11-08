@@ -1,4 +1,4 @@
-import 'package:flutter_azure_tts/src/auth/auth_token.dart';
+import 'package:azure_tts/src/auth/auth_token.dart';
 
 ///Holds all configurations
 class Config {

@@ -1,5 +1,5 @@
-import 'package:flutter_azure_tts/src/auth/authentication_types.dart';
-import 'package:flutter_azure_tts/src/common/base_client.dart';
+import 'package:azure_tts/src/auth/authentication_types.dart';
+import 'package:azure_tts/src/common/base_client.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/retry.dart';
 

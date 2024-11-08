@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:flutter_azure_tts/flutter_azure_tts.dart';
-import 'package:flutter_azure_tts/src/common/base_response.dart';
-import 'package:flutter_azure_tts/src/common/base_response_mapper.dart';
+import 'package:azure_tts/azure_tts.dart';
+import 'package:azure_tts/src/common/base_response.dart';
+import 'package:azure_tts/src/common/base_response_mapper.dart';
 import 'package:http/http.dart' as http;
 
 class VoicesResponseMapper extends BaseResponseMapper {

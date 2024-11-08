@@ -1,6 +1,6 @@
-import 'package:flutter_azure_tts/src/audio/audio_responses.dart';
-import 'package:flutter_azure_tts/src/common/base_response.dart';
-import 'package:flutter_azure_tts/src/common/base_response_mapper.dart';
+import 'package:azure_tts/src/audio/audio_responses.dart';
+import 'package:azure_tts/src/common/base_response.dart';
+import 'package:azure_tts/src/common/base_response_mapper.dart';
 import 'package:http/http.dart' as http;
 
 class AudioResponseMapper extends BaseResponseMapper {

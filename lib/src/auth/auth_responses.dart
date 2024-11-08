@@ -1,4 +1,4 @@
-import 'package:flutter_azure_tts/src/common/base_response.dart';
+import 'package:azure_tts/src/common/base_response.dart';
 
 ///Represents the response object of a token request.
 ///Must be implemented by all the response cases objects.

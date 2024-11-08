@@ -1,4 +1,4 @@
-import 'package:flutter_azure_tts/src/common/base_header.dart';
+import 'package:azure_tts/src/common/base_header.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/retry.dart';
 

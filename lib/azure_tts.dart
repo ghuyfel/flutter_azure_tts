@@ -1,15 +1,15 @@
-library flutter_azure_tts;
+library azure_tts;
 
-import 'package:flutter_azure_tts/src/audio/audio_responses.dart';
-import 'package:flutter_azure_tts/src/tts/tts.dart';
-import 'package:flutter_azure_tts/src/tts/tts_params.dart';
-import 'package:flutter_azure_tts/src/voices/voices.dart';
+import 'package:azure_tts/src/audio/audio_responses.dart';
+import 'package:azure_tts/src/tts/tts.dart';
+import 'package:azure_tts/src/tts/tts_params.dart';
+import 'package:azure_tts/src/voices/voices.dart';
 
 export '/src/audio/audio.dart';
 export '/src/auth/auth.dart';
-export '/src/voices/voices.dart';
 export '/src/common/common.dart';
 export "/src/tts/tts_params.dart";
+export '/src/voices/voices.dart';
 
 class AzureTts {
   ///Initialises the framework.

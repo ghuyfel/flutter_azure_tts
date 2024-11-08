@@ -1,11 +1,11 @@
-import 'package:flutter_azure_tts/src/audio/audio_client.dart';
-import 'package:flutter_azure_tts/src/audio/audio_request_param.dart';
-import 'package:flutter_azure_tts/src/audio/audio_response_mapper.dart';
-import 'package:flutter_azure_tts/src/audio/audio_responses.dart';
-import 'package:flutter_azure_tts/src/auth/authentication_types.dart';
-import 'package:flutter_azure_tts/src/common/config.dart';
-import 'package:flutter_azure_tts/src/common/constants.dart';
-import 'package:flutter_azure_tts/src/ssml/ssml.dart';
+import 'package:azure_tts/src/audio/audio_client.dart';
+import 'package:azure_tts/src/audio/audio_request_param.dart';
+import 'package:azure_tts/src/audio/audio_response_mapper.dart';
+import 'package:azure_tts/src/audio/audio_responses.dart';
+import 'package:azure_tts/src/auth/authentication_types.dart';
+import 'package:azure_tts/src/common/config.dart';
+import 'package:azure_tts/src/common/constants.dart';
+import 'package:azure_tts/src/ssml/ssml.dart';
 import 'package:http/http.dart' as http;
 
 import 'audio_type_header.dart';

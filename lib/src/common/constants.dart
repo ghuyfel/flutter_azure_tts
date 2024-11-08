@@ -1,4 +1,4 @@
-import 'package:flutter_azure_tts/src/common/config.dart';
+import 'package:azure_tts/src/common/config.dart';
 
 class Endpoints {
   Endpoints._();

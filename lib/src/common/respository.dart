@@ -1,15 +1,15 @@
 import 'dart:async';
 
-import 'package:flutter_azure_tts/src/audio/audio.dart';
-import 'package:flutter_azure_tts/src/audio/audio_handler.dart';
-import 'package:flutter_azure_tts/src/auth/auth.dart';
-import 'package:flutter_azure_tts/src/auth/auth_handler.dart';
-import 'package:flutter_azure_tts/src/auth/auth_token.dart';
-import 'package:flutter_azure_tts/src/common/azure_exception.dart';
-import 'package:flutter_azure_tts/src/common/config.dart';
-import 'package:flutter_azure_tts/src/tts/tts_params.dart';
-import 'package:flutter_azure_tts/src/voices/voices.dart';
-import 'package:flutter_azure_tts/src/voices/voices_handler.dart';
+import 'package:azure_tts/src/audio/audio.dart';
+import 'package:azure_tts/src/audio/audio_handler.dart';
+import 'package:azure_tts/src/auth/auth.dart';
+import 'package:azure_tts/src/auth/auth_handler.dart';
+import 'package:azure_tts/src/auth/auth_token.dart';
+import 'package:azure_tts/src/common/azure_exception.dart';
+import 'package:azure_tts/src/common/config.dart';
+import 'package:azure_tts/src/tts/tts_params.dart';
+import 'package:azure_tts/src/voices/voices.dart';
+import 'package:azure_tts/src/voices/voices_handler.dart';
 
 ///Implements repository pattern to acces Azure resources
 class Repository {

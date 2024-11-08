@@ -1,4 +1,4 @@
-import 'package:flutter_azure_tts/src/common/base_header.dart';
+import 'package:azure_tts/src/common/base_header.dart';
 
 ///Base class that all authentications types must implement.
 abstract class AuthenticationTypeHeader extends BaseHeader {

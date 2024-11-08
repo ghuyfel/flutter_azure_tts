@@ -6,7 +6,7 @@ class Log {
   static void disable() => _enabled = false;
 
   static bool get isEnabled => _enabled;
-  static String package = "[flutter_azure_tts]";
+  static String package = "[azure_tts]";
 
   static void d(String message, [String? tag]) {
     if (isEnabled) print("$package -> ${tag ?? ""} : $message");

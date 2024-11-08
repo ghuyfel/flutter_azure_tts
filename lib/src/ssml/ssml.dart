@@ -1,4 +1,4 @@
-import 'package:flutter_azure_tts/src/voices/voice_model.dart';
+import 'package:azure_tts/src/voices/voice_model.dart';
 
 class Ssml {
   Ssml({required this.voice, required this.text, required this.speed});
