@@ -1,9 +1,8 @@
-import 'package:flutter_azure_tts/src/auth/auth_client.dart';
-import 'package:flutter_azure_tts/src/auth/auth_responses.dart';
-import 'package:flutter_azure_tts/src/auth/authentication_types.dart';
-import 'package:flutter_azure_tts/src/common/config.dart';
-import 'package:flutter_azure_tts/src/common/constants.dart';
-
+import 'package:azure_tts/src/auth/auth_client.dart';
+import 'package:azure_tts/src/auth/auth_responses.dart';
+import 'package:azure_tts/src/auth/authentication_types.dart';
+import 'package:azure_tts/src/common/config.dart';
+import 'package:azure_tts/src/common/constants.dart';
 import 'package:http/http.dart' as http;
 
 class Authentication {

@@ -1,14 +1,14 @@
+import 'package:azure_tts/azure_tts.dart';
+import 'package:azure_tts/src/audio/audio_handler.dart';
+import 'package:azure_tts/src/auth/auth_client.dart';
+import 'package:azure_tts/src/auth/auth_handler.dart';
+import 'package:azure_tts/src/auth/auth_response_mapper.dart';
+import 'package:azure_tts/src/auth/authentication_types.dart';
+import 'package:azure_tts/src/common/config.dart';
+import 'package:azure_tts/src/common/respository.dart';
+import 'package:azure_tts/src/utils/log.dart';
+import 'package:azure_tts/src/voices/voices_handler.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_azure_tts/flutter_azure_tts.dart';
-import 'package:flutter_azure_tts/src/audio/audio_handler.dart';
-import 'package:flutter_azure_tts/src/auth/auth_client.dart';
-import 'package:flutter_azure_tts/src/auth/auth_handler.dart';
-import 'package:flutter_azure_tts/src/auth/auth_response_mapper.dart';
-import 'package:flutter_azure_tts/src/auth/authentication_types.dart';
-import 'package:flutter_azure_tts/src/common/config.dart';
-import 'package:flutter_azure_tts/src/common/respository.dart';
-import 'package:flutter_azure_tts/src/utils/log.dart';
-import 'package:flutter_azure_tts/src/voices/voices_handler.dart';
 import 'package:http/http.dart' as http;
 
 ///Helper class for Azure Cognitive TTS requests

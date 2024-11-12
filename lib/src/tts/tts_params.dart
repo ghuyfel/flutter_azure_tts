@@ -1,5 +1,5 @@
-import 'package:flutter_azure_tts/src/audio/audio_request_param.dart';
-import 'package:flutter_azure_tts/src/voices/voices.dart';
+import 'package:azure_tts/src/audio/audio_request_param.dart';
+import 'package:azure_tts/src/voices/voices.dart';
 
 class TtsParams extends AudioRequestParams {
   /// Rate is the speed at which the voice will speak.

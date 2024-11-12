@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter_azure_tts/flutter_azure_tts.dart';
-import 'package:flutter_azure_tts/src/auth/auth_client.dart';
-import 'package:flutter_azure_tts/src/auth/auth_response_mapper.dart';
-import 'package:flutter_azure_tts/src/common/constants.dart';
+import 'package:azure_tts/azure_tts.dart';
+import 'package:azure_tts/src/auth/auth_client.dart';
+import 'package:azure_tts/src/auth/auth_response_mapper.dart';
+import 'package:azure_tts/src/common/constants.dart';
 
 ///Handles authorisation token requests
 class AuthHandler {

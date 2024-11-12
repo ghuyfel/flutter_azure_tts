@@ -1,4 +1,4 @@
-import 'package:flutter_azure_tts/src/common/base_header.dart';
+import 'package:azure_tts/src/common/base_header.dart';
 
 class AudioTypeHeader extends BaseHeader {
   ///Audio format should be selected from [AudioOutputFormat] class.

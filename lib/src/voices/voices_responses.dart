@@ -1,5 +1,5 @@
-import 'package:flutter_azure_tts/src/common/base_response.dart';
-import 'package:flutter_azure_tts/src/voices/voice_model.dart';
+import 'package:azure_tts/src/common/base_response.dart';
+import 'package:azure_tts/src/voices/voice_model.dart';
 
 class VoicesResponse extends BaseResponse {
   VoicesResponse({required int code, required String reason})

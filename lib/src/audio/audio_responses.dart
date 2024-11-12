@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:flutter_azure_tts/src/common/base_response.dart';
+import 'package:azure_tts/src/common/base_response.dart';
 
 abstract class AudioResponse extends BaseResponse {
   AudioResponse({required int code, required String reason})
