@@ -21,12 +21,16 @@ class AzureTts {
   /// **withLogs** : (optional) enable logs. *true* by default
   ///
   ///Throws an [AzureException] on failure.
-  static void init(
-      {required String subscriptionKey,
-      required String region,
-      bool withLogs = true}) async {
+  static void init({
+    required String subscriptionKey,
+    required String region,
+    bool withLogs = true,
+  }) async {
     Tts.init(
-        region: region, subscriptionKey: subscriptionKey, withLogs: withLogs);
+      region: region,
+      subscriptionKey: subscriptionKey,
+      withLogs: withLogs,
+    );
   }
 
   ///Get available voices on the Azure Endpoint Region
