@@ -12,7 +12,7 @@ export '/src/common/common.dart';
 export "/src/tts/tts_params.dart";
 export '/src/ssml/style_ssml.dart';
 
-class AzureTts {
+class FlutterAzureTts {
   ///Initialises the framework.
   ///
   /// **region** : Azure endpoint region

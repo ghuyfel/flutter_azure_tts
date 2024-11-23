@@ -4,14 +4,14 @@ import 'package:flutter_azure_tts/src/ssml/style_ssml.dart';
 void main() async {
   try {
     //Load configs
-    AzureTts.init(
+    FlutterAzureTts.init(
       subscriptionKey: "YOUR SUBSCRIPTION KEY",
       region: "YOUR REGION",
       withLogs: true,
     );
 
     // Get available voices
-    final voicesResponse = await AzureTts.getAvailableVoices();
+    final voicesResponse = await FlutterAzureTts.getAvailableVoices();
     final voices = voicesResponse.voices;
 
     //Print all available voices
@@ -40,7 +40,7 @@ void main() async {
         // optional imitates a certain person's pitch (not supported by all voices)
         text: text);
 
-    final ttsResponse = await AzureTts.getTts(params);
+    final ttsResponse = await FlutterAzureTts.getTts(params);
 
     //Get the audio bytes.
     final audioBytes = ttsResponse.audio.buffer

@@ -1,5 +1,4 @@
 enum VoiceStyle {
-
   ///Expresses an excited and high-energy tone for promoting a product or service.
   advertisement_upbeat,
 
@@ -105,7 +104,7 @@ enum VoiceStyle {
   unfriendly;
 
   String get styleName {
-    switch(this) {
+    switch (this) {
       case VoiceStyle.documentary_narration:
       case VoiceStyle.narration_professional:
       case VoiceStyle.narration_relaxed:
@@ -143,5 +142,4 @@ enum VoiceStyle {
         return this.name;
     }
   }
-
 }

@@ -8,6 +8,7 @@ class AudioRequestParams {
   final String audioFormat;
   final double? rate;
   final StyleSsml? style;
+
   ///[role] The speaking role-play. The voice can imitate a different age and gender,
   ///but the voice name isn't changed. For example, a male voice can raise the pitch
   ///and change the intonation to imitate a female voice, but the voice name isn't changed.
