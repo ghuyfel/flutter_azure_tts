@@ -6,10 +6,11 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:args/args.dart';
 import 'package:flutter_azure_tts/flutter_azure_tts.dart';
+import 'package:flutter_azure_tts/src/ssml/style_ssml.dart';
 
 // You can also pass these with -k and -e
-const _azureKey = 'YOUR_AZURE_KEY';
-const _azureRegion = 'YOUR_AZURE_REGION';
+const _azureKey = 'YOUR SUBSCRIPTION KEY';
+const _azureRegion = 'YOUR REGION';
 
 final _parser = ArgParser()
   ..addFlag(
@@ -93,23 +94,27 @@ void main(List<String> argss) async {
   // Get available voices
   final voicesResponse = await AzureTts.getAvailableVoices();
   List<Voice> voices = voicesResponse.voices
-      .where((e) => e.shortName.toLowerCase().contains(args['voice'].toLowerCase()))
+      .where((e) =>
+          e.shortName.toLowerCase().contains(args['voice'].toLowerCase()))
       .toList();
   voices.shuffle();
 
   if (args['onlystyles']) {
-    voices.removeWhere((e) => e.styles == null || e.styles!.isEmpty);
+    voices.removeWhere((e) => e.styles.isEmpty);
   }
 
   List<String?> styles = args['styles']?.split(',') ?? [null];
   bool hasStyles = styles.isNotEmpty && styles.first != null;
   if (hasStyles) {
     for (final style in styles) {
-      voices.removeWhere((e) => e.styles == null || !e.styles!.contains(style));
+      voices.removeWhere((e) => !e.styles.contains(style));
     }
   }
-  List<double?> styleDegrees =
-      args['styledegrees']?.split(',').map<double>((e) => double.parse(e)).toList() ?? [null];
+  List<double?> styleDegrees = args['styledegrees']
+          ?.split(',')
+          .map<double>((e) => double.parse(e))
+          .toList() ??
+      [null];
 
   if (voices.isEmpty) {
     print(
@@ -121,8 +126,10 @@ void main(List<String> argss) async {
 
   if (args['listvoices']) {
     print(' --- Voices matching \'${args['voice']}\' (${voices.length}) --- ');
-    print(voices.map((e) => '${e.shortName} || styles: ${e.styles}').join('\n'));
+    print(
+        voices.map((e) => '${e.shortName} || roles:  ${e.roles} || styles: ${e.styles}').join('\n'));
     print(' ------ ');
+
     exit(0);
   }
 
@@ -162,10 +169,14 @@ Future<Uint8List> _generateTtsAudio({
   TtsParams params = TtsParams(
     voice: voice,
     audioFormat: AudioOutputFormat.audio16khz32kBitrateMonoMp3,
-    rate: rate, // optional prosody rate (default is 1.0)
+    rate: rate,
+    // optional prosody rate (default is 1.0)
     text: text,
-    style: style,
-    styleDegree: degree,
+    style: StyleSsml(
+        style: VoiceStyle.values
+            .where((e) => e.name.compareTo(style ?? "") == 0)
+            .first,
+    styleDegree: degree ?? 1,),
   );
   final ttsResponse = await AzureTts.getTts(params);
   print('Generated audio for voice ${voice.shortName} with style $style'
@@ -176,5 +187,6 @@ Future<Uint8List> _generateTtsAudio({
 void _writeFile(String filename, Uint8List data) {
   final file = File(filename);
   file.writeAsBytesSync(data);
-  print('Wrote ${(data.lengthInBytes / 1024).toStringAsFixed(2)}kb to file $filename');
+  print(
+      'Wrote ${(data.lengthInBytes / 1024).toStringAsFixed(2)}kb to file $filename');
 }

@@ -1,3 +1,11 @@
+## 0.2.2
+
+* updated dart version
+* updated dependencies versions
+* added style and role support
+* new example file (example.dart) to run/test in terminal (i.e. dart example.dart -h)
+* bug fixes and improvements
+
 ## 0.1.6
 
 * getAvailableVoices now only returns VoicesSuccess and throws an exception otherwise
