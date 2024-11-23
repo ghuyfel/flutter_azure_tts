@@ -6,7 +6,6 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:args/args.dart';
 import 'package:flutter_azure_tts/flutter_azure_tts.dart';
-import 'package:flutter_azure_tts/src/ssml/style_ssml.dart';
 
 // You can also pass these with -k and -e
 const _azureKey = 'YOUR SUBSCRIPTION KEY';
@@ -85,14 +84,14 @@ void main(List<String> argss) async {
     return;
   }
 
-  AzureTts.init(
+  FlutterAzureTts.init(
     subscriptionKey: args['key'] ?? _azureKey,
     region: args['region'] ?? _azureRegion,
     withLogs: true,
   );
 
   // Get available voices
-  final voicesResponse = await AzureTts.getAvailableVoices();
+  final voicesResponse = await FlutterAzureTts.getAvailableVoices();
   List<Voice> voices = voicesResponse.voices
       .where((e) =>
           e.shortName.toLowerCase().contains(args['voice'].toLowerCase()))
@@ -126,8 +125,10 @@ void main(List<String> argss) async {
 
   if (args['listvoices']) {
     print(' --- Voices matching \'${args['voice']}\' (${voices.length}) --- ');
-    print(
-        voices.map((e) => '${e.shortName} || roles:  ${e.roles} || styles: ${e.styles}').join('\n'));
+    print(voices
+        .map((e) =>
+            '${e.shortName} || roles:  ${e.roles} || styles: ${e.styles}')
+        .join('\n'));
     print(' ------ ');
 
     exit(0);
@@ -173,12 +174,13 @@ Future<Uint8List> _generateTtsAudio({
     // optional prosody rate (default is 1.0)
     text: text,
     style: StyleSsml(
-        style: VoiceStyle.values
-            .where((e) => e.name.compareTo(style ?? "") == 0)
-            .first,
-    styleDegree: degree ?? 1,),
+      style: VoiceStyle.values
+          .where((e) => e.name.compareTo(style ?? "") == 0)
+          .first,
+      styleDegree: degree ?? 1,
+    ),
   );
-  final ttsResponse = await AzureTts.getTts(params);
+  final ttsResponse = await FlutterAzureTts.getTts(params);
   print('Generated audio for voice ${voice.shortName} with style $style'
       ', degree $degree');
   return ttsResponse.audio;

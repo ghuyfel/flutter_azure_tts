@@ -16,11 +16,11 @@ Voice _$VoiceFromJson(Map<String, dynamic> json) => Voice(
       sampleRateHertz: json['sampleRateHertz'] as String,
       voiceType: json['voiceType'] as String,
       status: json['status'] as String,
-      styles: (json['styles'] as List<dynamic>?)
-          !.map((e) => $enumDecode(_$VoiceStyleEnumMap, e))
+      styles: (json['styles'] as List<dynamic>?)!
+          .map((e) => $enumDecode(_$VoiceStyleEnumMap, e))
           .toList(),
-      roles: (json['roles'] as List<dynamic>?)
-          !.map((e) => $enumDecode(_$VoiceRoleEnumMap, e))
+      roles: (json['roles'] as List<dynamic>?)!
+          .map((e) => $enumDecode(_$VoiceRoleEnumMap, e))
           .toList(),
     );
 

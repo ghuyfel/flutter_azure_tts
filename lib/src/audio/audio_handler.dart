@@ -27,7 +27,8 @@ class AudioHandler {
         role: params.role,
       );
 
-      final response = await audioClient.post(Uri.parse(Endpoints.audio), body: ssml.buildSsml);
+      final response = await audioClient.post(Uri.parse(Endpoints.audio),
+          body: ssml.buildSsml);
       final audioResponse = mapper.map(response);
       if (audioResponse is AudioSuccess) {
         return audioResponse;

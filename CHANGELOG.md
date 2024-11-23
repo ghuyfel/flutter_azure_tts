@@ -1,3 +1,7 @@
+## 0.2.3
+
+* Reverted package's class name
+
 ## 0.2.2
 
 * updated dart version

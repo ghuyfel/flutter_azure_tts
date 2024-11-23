@@ -7,7 +7,7 @@ Flutter implementation of [Microsoft Azure Cognitive Text-To-Speech API](https:/
 Initialise the framework with your Region and Subscription key
 
 ```dart
-  AzureTts.init(
+  FlutterAzureTts.init(
       subscriptionKey: "YOUR SUBSCRIPTION KEY",
       region: "YOUR REGION",
       withLogs: true); // enable logs
@@ -40,7 +40,7 @@ Request audio file.
       rate: 1.5, // optional prosody rate (default is 1.0)
       text: text);
 
-  final ttsResponse = await AzureTts.getTts(params);
+  final ttsResponse = await FlutterAzureTts.getTts(params);
 
   //Get the audio bytes.
   final audioBytes = ttsResponse.audio.buffer.asByteData(); // you can save these bytes to a file for later playback

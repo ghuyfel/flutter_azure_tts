@@ -1,7 +1,7 @@
 import 'package:flutter_azure_tts/src/audio/audio_request_param.dart';
 
 class TtsParams extends AudioRequestParams {
-    const TtsParams({
+  const TtsParams({
     required super.voice,
     required super.audioFormat,
     required super.text,

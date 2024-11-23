@@ -42,22 +42,23 @@ class VoiceData extends Equatable {
     this.roles,
   });
 
-  factory VoiceData.fromJson(Map<String, dynamic> json) => _$VoiceDataFromJson(json);
+  factory VoiceData.fromJson(Map<String, dynamic> json) =>
+      _$VoiceDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$VoiceDataToJson(this);
 
   @override
   List<Object?> get props => [
-    name,
-    displayName,
-    localName,
-    shortName,
-    gender,
-    locale,
-    sampleRateHertz,
-    voiceType,
-    status,
-    styles,
-    roles,
-  ];
+        name,
+        displayName,
+        localName,
+        shortName,
+        gender,
+        locale,
+        sampleRateHertz,
+        voiceType,
+        status,
+        styles,
+        roles,
+      ];
 }
