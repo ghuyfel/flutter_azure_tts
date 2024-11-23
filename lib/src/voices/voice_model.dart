@@ -1,63 +1,38 @@
-import 'package:equatable/equatable.dart';
+import 'package:flutter_azure_tts/flutter_azure_tts.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'voice_model.g.dart';
 
-@JsonSerializable()
-class Voice extends Equatable {
-  @JsonKey(name: "Name")
+@JsonSerializable(fieldRename: FieldRename.none, explicitToJson: true)
+class Voice {
   final String name;
-  @JsonKey(name: "DisplayName")
   final String displayName;
-  @JsonKey(name: "LocalName")
   final String localName;
-  @JsonKey(name: "ShortName")
   final String shortName;
-  @JsonKey(name: "Gender")
   final String gender;
-  @JsonKey(name: "Locale")
   final String locale;
-  @JsonKey(name: "SampleRateHertz")
   final String sampleRateHertz;
-  @JsonKey(name: "VoiceType")
   final String voiceType;
-  @JsonKey(name: "Status")
   final String status;
-  @JsonKey(name: "StyleList")
-  final List<String>? styles;
-  @JsonKey(name: "RolePlayList")
-  final List<String>? roles;
+  final List<VoiceStyle> styles;
+  final List<VoiceRole> roles;
 
-  const Voice({
-    required this.name,
-    required this.displayName,
-    required this.localName,
-    required this.shortName,
-    required this.gender,
-    required this.locale,
-    required this.sampleRateHertz,
-    required this.voiceType,
-    required this.status,
-    this.styles,
-    this.roles,
-  });
+  factory Voice.fromJson(Map<String, dynamic> json) {
+    return _$VoiceFromJson(json);
+  }
 
-  factory Voice.fromJson(Map<String, dynamic> json) => _$VoiceFromJson(json);
+  Voice(
+      {required this.name,
+      required this.displayName,
+      required this.localName,
+      required this.shortName,
+      required this.gender,
+      required this.locale,
+      required this.sampleRateHertz,
+      required this.voiceType,
+      required this.status,
+      required this.styles,
+      required this.roles});
 
   Map<String, dynamic> toJson() => _$VoiceToJson(this);
-
-  @override
-  List<Object?> get props => [
-        name,
-        displayName,
-        localName,
-        shortName,
-        gender,
-        locale,
-        sampleRateHertz,
-        voiceType,
-        status,
-        styles,
-        roles,
-      ];
 }

@@ -1,4 +1,5 @@
-import 'package:flutter_azure_tts/src/voices/voice_model.dart';
+import 'package:flutter_azure_tts/flutter_azure_tts.dart';
+import 'package:flutter_azure_tts/src/ssml/style_ssml.dart';
 
 class Ssml {
   const Ssml({
@@ -7,15 +8,13 @@ class Ssml {
     required this.speed,
     this.style,
     this.role,
-    this.styleDegree,
   });
 
   final Voice voice;
   final String text;
   final double speed;
-  final String? style;
-  final String? role;
-  final double? styleDegree;
+  final StyleSsml? style;
+  final VoiceRole? role;
 
   @override
   String toString() => buildSsml;
@@ -26,9 +25,9 @@ class Ssml {
         "xml:lang='${voice.locale}'>"
         "<voice xml:lang='${voice.locale}' "
         "xml:gender='${voice.gender}' "
-        "${style != null ? "xml:style='$style' " : ""}"
-        "${role != null ? "xml:role='$role' " : ""}"
-        "${styleDegree != null ? "xml:styledegree='$styleDegree' " : ""}"
+        "${style != null ? "xml:style='${style!.styleName}' " : ""}"
+        "${role != null ? "xml:role='${role!.name}' " : ""}"
+        "${style?.styleDegree != null ? "xml:styledegree='${style!.styleDegree}' " : ""}"
         "name='${voice.shortName}'>"
         "<prosody rate='$speed'>"
         "$text"

@@ -25,7 +25,6 @@ class AudioHandler {
         speed: params.rate ?? 1,
         style: params.style,
         role: params.role,
-        styleDegree: params.styleDegree,
       );
 
       final response = await audioClient.post(Uri.parse(Endpoints.audio), body: ssml.buildSsml);
