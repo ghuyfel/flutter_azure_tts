@@ -1,27 +1,43 @@
-import 'package:flutter_azure_tts/src/common/config.dart';
+import 'package:flutter_azure_tts/src/common/azure_tts_config.dart';
 
 class Endpoints {
   Endpoints._();
 
-  ///Endpoint used to get Access Token for requests authentication.
-  static String get issueToken =>
-      "https://${Config.region}.api.cognitive.microsoft.com/sts/v1.0/issueToken";
+  static String get issueToken {
+    final config = ConfigManager().config;
+    return "https://${config.region}.api.cognitive.microsoft.com/sts/v1.0/issueToken";
+  }
 
-  ///Endpoint used to get the list of voices supported by the endpoint.
-  static String get voicesList =>
-      "https://${Config.region}.tts.speech.microsoft.com/cognitiveservices/voices/list";
+  static String get voicesList {
+    final config = ConfigManager().config;
+    return "https://${config.region}.tts.speech.microsoft.com/cognitiveservices/voices/list";
+  }
 
-  ///Endpoint used to get the list of voices supported by the endpoint.
-  static String get customVoicesList =>
-      "https://${Config.region}.voice.speech.microsoft.com/cognitiveservices/v1?deploymentId=";
+  static String get customVoicesList {
+    final config = ConfigManager().config;
+    return "https://${config.region}.voice.speech.microsoft.com/cognitiveservices/v1?deploymentId=";
+  }
 
-  static String get longAudio =>
-      "https://${Config.region}.customvoice.api.speech.microsoft.com";
+  static String get longAudio {
+    final config = ConfigManager().config;
+    return "https://${config.region}.customvoice.api.speech.microsoft.com";
+  }
 
-  static String get audio =>
-      "https://${Config.region}.tts.speech.microsoft.com/cognitiveservices/v1";
+  static String get audio {
+    final config = ConfigManager().config;
+    return "https://${config.region}.tts.speech.microsoft.com/cognitiveservices/v1";
+  }
 }
 
 class Constants {
-  static Duration get authRefreshDuration => Duration(minutes: 8);
+  Constants._();
+  
+  static const Duration authRefreshDuration = Duration(minutes: 8);
+  static const int maxTextLength = 10000;
+  static const int maxRetries = 3;
+  static const Duration defaultTimeout = Duration(seconds: 30);
+  
+  // Rate limits
+  static const int maxRequestsPerSecond = 20;
+  static const int maxRequestsPerMinute = 200;
 }

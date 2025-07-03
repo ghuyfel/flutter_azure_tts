@@ -1,6 +1,8 @@
 library flutter_azure_tts;
 
 import 'package:flutter_azure_tts/src/audio/audio_responses.dart';
+import 'package:flutter_azure_tts/src/common/azure_tts_config.dart';
+import 'package:flutter_azure_tts/src/common/azure_tts_exception.dart';
 import 'package:flutter_azure_tts/src/tts/tts.dart';
 import 'package:flutter_azure_tts/src/tts/tts_params.dart';
 import 'package:flutter_azure_tts/src/voices/voices.dart';
@@ -10,57 +12,84 @@ export '/src/auth/auth.dart';
 export '/src/voices/voices.dart';
 export '/src/common/common.dart';
 export "/src/tts/tts_params.dart";
+export '/src/tts/tts_params_builder.dart';
 export '/src/ssml/style_ssml.dart';
+export '/src/voices/voice_filter.dart';
+export '/src/common/azure_tts_exception.dart';
+export '/src/common/retry_policy.dart';
 
+/// Main entry point for Azure Text-to-Speech functionality
 class FlutterAzureTts {
-  ///Initialises the framework.
-  ///
-  /// **region** : Azure endpoint region
-  ///
-  /// **subscriptionKey** : Azure subscription key
-  ///
-  /// **withLogs** : (optional) enable logs. *true* by default
-  ///
-  ///Throws an [AzureException] on failure.
+  FlutterAzureTts._(); // Private constructor to prevent instantiation
+
+  /// Initializes the Azure TTS framework with improved configuration
+  /// 
+  /// Throws [InitializationException] if configuration is invalid
   static void init({
     required String subscriptionKey,
     required String region,
     bool withLogs = true,
-  }) async {
-    Tts.init(
-      region: region,
-      subscriptionKey: subscriptionKey,
-      withLogs: withLogs,
-    );
+    RetryPolicy? retryPolicy,
+    Duration? requestTimeout,
+  }) {
+    try {
+      final config = AzureTtsConfig.create(
+        subscriptionKey: subscriptionKey,
+        region: region,
+        withLogs: withLogs,
+        retryPolicy: retryPolicy,
+        requestTimeout: requestTimeout,
+      );
+      
+      ConfigManager().setConfig(config);
+      
+      Tts.init(
+        region: region,
+        subscriptionKey: subscriptionKey,
+        withLogs: withLogs,
+      );
+    } catch (e) {
+      throw InitializationException('Failed to initialize Azure TTS', e);
+    }
   }
 
-  ///Get available voices on the Azure Endpoint Region
-  ///
-  ///Returns [VoicesSuccess]
-  ///
-  /// [VoicesSuccess] request succeeded
-  ///
-  /// On failure throws one of the following:
-  /// [VoicesFailedBadRequest], [VoicesFailedUnauthorized],
-  /// [VoicesFailedTooManyRequests], [VoicesFailedBadGateWay], [VoicesFailedUnkownError] or [AzureException]
+  /// Gets available voices with improved error handling
+  /// 
+  /// Returns [VoicesSuccess] on success
+  /// Throws [AzureTtsException] on failure
   static Future<VoicesSuccess> getAvailableVoices() async {
-    return Tts.getAvailableVoices();
+    if (!ConfigManager().isInitialized) {
+      throw InitializationException('Azure TTS not initialized. Call init() first.');
+    }
+    
+    try {
+      return await Tts.getAvailableVoices();
+    } catch (e) {
+      if (e is AzureTtsException) rethrow;
+      throw NetworkException('Failed to get available voices', e);
+    }
   }
 
-  ///Converts text to speech and return audio file as [Uint8List].
-  ///
-  /// [ttsParams] request parameters
-  ///
-  /// Returns [AudioResponse]
-  ///
-  /// [AudioSuccess] request succeeded
-  ///
-  /// On failure returns one of the following:
-  /// [AudioFailedBadRequest], [AudioFailedUnauthorized], [AudioFailedUnsupported], [AudioFailedTooManyRequest],
-  /// [AudioFailedBadGateway], [AudioFailedBadGateway], [AudioFailedUnkownError]
-  ///
-  ///Throws an [AzureException] if something goes wrong.
+  /// Converts text to speech with improved error handling
+  /// 
+  /// Returns [AudioSuccess] on success
+  /// Throws [AzureTtsException] on failure
   static Future<AudioSuccess> getTts(TtsParams params) async {
-    return Tts.getTts(params);
+    if (!ConfigManager().isInitialized) {
+      throw InitializationException('Azure TTS not initialized. Call init() first.');
+    }
+    
+    try {
+      return await Tts.getTts(params);
+    } catch (e) {
+      if (e is AzureTtsException) rethrow;
+      throw NetworkException('Failed to generate speech', e);
+    }
   }
+
+  /// Checks if the framework is properly initialized
+  static bool get isInitialized => ConfigManager().isInitialized;
+
+  /// Gets the current configuration (read-only)
+  static AzureTtsConfig get config => ConfigManager().config;
 }
