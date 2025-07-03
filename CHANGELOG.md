@@ -1,4 +1,4 @@
-## 0.3.0 - Major Architecture Overhaul and Streaming Support
+## 1.0.0 - Major Architecture Overhaul and Streaming Support
 
 ### 🚀 **NEW FEATURES**
 
@@ -46,18 +46,6 @@
 - **Memory Management**: Efficient cache cleanup and size management
 - **Custom TTL**: Different cache durations for different content types
 
-### 🏗️ **ARCHITECTURE IMPROVEMENTS**
-
-#### **Modular Folder Structure**
-- **Organized Modules**: Logical separation of concerns into focused modules
-  - `audio/core/`: Core audio functionality
-  - `audio/streaming/`: Real-time streaming features
-  - `audio/client/`: HTTP client implementations
-  - `audio/handlers/`: Request orchestration
-  - `audio/caching/`: Performance optimization
-- **Single Responsibility**: Each file focuses on one specific functionality
-- **Clear Boundaries**: Well-defined interfaces between modules
-
 #### **Enhanced Documentation**
 - **Comprehensive Comments**: Detailed documentation for all classes and methods
 - **Usage Examples**: Code examples throughout the documentation
@@ -69,52 +57,6 @@
 - **Immutable Objects**: Prevent accidental state modification
 - **Generic Types**: Type-safe caching and result handling
 - **Validation**: Runtime validation with compile-time type checking
-
-### 🔧 **API ENHANCEMENTS**
-
-#### **Streaming API**
-```dart
-// Basic streaming
-final streamResponse = await FlutterAzureTts.getTtsStream(streamingParams);
-await for (final chunk in streamResponse.audioStream) {
-  audioPlayer.addChunk(chunk.data);
-}
-
-// Streaming with progress
-final (audioStream, progressStream) = await FlutterAzureTts.getTtsStreamWithProgress(params);
-```
-
-#### **Voice Filtering**
-```dart
-// Fluent filtering API
-final voice = voices.filter()
-    .byLocale('en-US')
-    .neural()
-    .withStyles()
-    .firstOrThrow;
-```
-
-#### **Parameter Building**
-```dart
-// Type-safe parameter construction
-final params = TtsParamsBuilder()
-    .voice(selectedVoice)
-    .text('Hello world')
-    .audioFormat(AudioOutputFormat.audio16khz32kBitrateMonoMp3)
-    .rate(1.2)
-    .build();
-```
-
-#### **Advanced Configuration**
-```dart
-// Enhanced initialization
-FlutterAzureTts.init(
-  subscriptionKey: 'key',
-  region: 'region',
-  retryPolicy: RetryPolicy(maxRetries: 5),
-  requestTimeout: Duration(seconds: 45),
-);
-```
 
 ### 🚀 **PERFORMANCE IMPROVEMENTS**
 
@@ -146,32 +88,6 @@ FlutterAzureTts.init(
 - **Error Handling**: Proper handling of authentication failures
 - **Configuration Validation**: Validate subscription keys and regions
 
-### 🧪 **TESTING IMPROVEMENTS**
-
-#### **Unit Tests**
-- **Comprehensive Coverage**: Tests for all major functionality
-- **Mock Support**: Test utilities for mocking Azure services
-- **Parameter Validation**: Tests for all validation scenarios
-- **Error Handling**: Tests for all exception types
-
-#### **Example Applications**
-- **Streaming Examples**: Comprehensive streaming usage examples
-- **Command-line Tool**: Enhanced example with advanced options
-- **Best Practices**: Examples demonstrating optimal usage patterns
-
-### 📚 **DOCUMENTATION UPDATES**
-
-#### **README Overhaul**
-- **Complete Rewrite**: Comprehensive documentation with examples
-- **Feature Showcase**: Detailed explanation of all features
-- **Migration Guide**: Clear guidance for upgrading from previous versions
-- **Performance Tips**: Optimization recommendations
-
-#### **API Documentation**
-- **Detailed Comments**: Every class and method thoroughly documented
-- **Usage Examples**: Code examples throughout the documentation
-- **Best Practices**: Guidance on optimal usage patterns
-
 ### 🔄 **BREAKING CHANGES**
 
 #### **Configuration**
@@ -186,44 +102,12 @@ FlutterAzureTts.init(
 - Reorganized internal modules (no impact on public API)
 - Updated import paths for internal development
 
-### 🛠️ **MIGRATION GUIDE**
-
-#### **From 0.2.2 to 0.3.0**
-
-**Public API remains backward compatible**, but new features are recommended:
-
-```dart
-// Old way (still works)
-FlutterAzureTts.init(subscriptionKey: "key", region: "region");
-final params = TtsParams(voice: voice, text: text, audioFormat: format);
-
-// New way (recommended)
-FlutterAzureTts.init(
-  subscriptionKey: "key", 
-  region: "region",
-  retryPolicy: RetryPolicy(maxRetries: 3),
-);
-final params = TtsParamsBuilder()
-    .voice(voice)
-    .text(text)
-    .audioFormat(format)
-    .build();
-```
-
 ### 🐛 **BUG FIXES**
 
 - **Authentication**: Fixed token refresh edge cases
 - **Error Handling**: Improved error message clarity
 - **Memory Leaks**: Fixed potential memory leaks in streaming scenarios
 - **Thread Safety**: Resolved race conditions in configuration management
-
-### 📦 **DEPENDENCIES**
-
-- **Updated**: All dependencies updated to latest stable versions
-- **Added**: Support for new streaming and caching features
-- **Optimized**: Reduced dependency footprint where possible
-
----
 
 ## 0.2.3
 
