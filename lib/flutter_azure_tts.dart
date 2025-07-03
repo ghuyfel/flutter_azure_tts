@@ -1,8 +1,8 @@
 library flutter_azure_tts;
 
-import 'package:flutter_azure_tts/src/audio/audio_responses.dart';
-import 'package:flutter_azure_tts/src/audio/audio_stream.dart';
-import 'package:flutter_azure_tts/src/audio/audio_stream_handler.dart';
+import 'package:flutter_azure_tts/src/audio/core/audio_responses.dart';
+import 'package:flutter_azure_tts/src/audio/streaming/audio_stream.dart';
+import 'package:flutter_azure_tts/src/audio/handlers/audio_stream_handler.dart';
 import 'package:flutter_azure_tts/src/common/azure_tts_config.dart';
 import 'package:flutter_azure_tts/src/common/azure_tts_exception.dart';
 import 'package:flutter_azure_tts/src/tts/tts.dart';
@@ -18,7 +18,7 @@ export "/src/tts/tts_params.dart";
 export '/src/tts/tts_params_builder.dart';
 export '/src/tts/tts_streaming_params.dart';
 export '/src/tts/tts_streaming_params_builder.dart';
-export '/src/audio/audio_stream.dart';
+export '/src/audio/streaming/audio_stream.dart';
 export '/src/ssml/style_ssml.dart';
 export '/src/voices/voice_filter.dart';
 export '/src/common/azure_tts_exception.dart';
