@@ -371,25 +371,6 @@ audioCache.putWithTtl(
 );
 ```
 
-## 🏗️ Architecture
-
-The library is organized into logical modules:
-
-```
-lib/src/
-├── audio/
-│   ├── core/           # Core audio functionality
-│   ├── streaming/      # Real-time streaming
-│   ├── client/         # HTTP clients
-│   ├── handlers/       # Request orchestration
-│   └── caching/        # Performance optimization
-├── auth/               # Authentication management
-├── voices/             # Voice management and filtering
-├── tts/                # TTS parameter builders
-├── common/             # Shared utilities
-└── ssml/               # SSML generation
-```
-
 ## 📊 Performance Tips
 
 ### For Standard TTS
@@ -460,28 +441,10 @@ Check out the `example/` directory for comprehensive examples:
 - `streaming_example.dart` - Real-time streaming examples
 - `main.dart` - Basic usage example
 
-## 🤝 Contributing
-
-Contributions are welcome! Please read our contributing guidelines and submit pull requests to our repository.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 🔗 Links
 
 - [Azure Text-to-Speech Documentation](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/text-to-speech)
 - [Azure Speech Service](https://azure.microsoft.com/en-us/services/cognitive-services/speech-services/)
 - [Package on pub.dev](https://pub.dev/packages/flutter_azure_tts)
-
-## 🆘 Support
-
-If you encounter any issues or have questions:
-
-1. Check the [documentation](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/)
-2. Search existing [issues](https://github.com/ghuyfel/flutter_azure_tts/issues)
-3. Create a new issue with detailed information
-
----
 
 Made with ❤️ for the Flutter community
