@@ -20,7 +20,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_azure_tts: ^0.2.3
+  flutter_azure_tts: ^1.0.0
 ```
 
 ## 🏁 Getting Started

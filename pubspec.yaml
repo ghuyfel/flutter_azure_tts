@@ -1,6 +1,6 @@
 name: flutter_azure_tts
 description: Flutter implementation of Microsoft Azure Cognitive Text-To-Speech
-version: 0.2.3
+version: 1.0.0
 homepage: https://github.com/ghuyfel/flutter_azure_tts
 
 environment:
