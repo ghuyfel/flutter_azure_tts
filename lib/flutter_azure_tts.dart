@@ -1,10 +1,13 @@
 library flutter_azure_tts;
 
 import 'package:flutter_azure_tts/src/audio/audio_responses.dart';
+import 'package:flutter_azure_tts/src/audio/audio_stream.dart';
+import 'package:flutter_azure_tts/src/audio/audio_stream_handler.dart';
 import 'package:flutter_azure_tts/src/common/azure_tts_config.dart';
 import 'package:flutter_azure_tts/src/common/azure_tts_exception.dart';
 import 'package:flutter_azure_tts/src/tts/tts.dart';
 import 'package:flutter_azure_tts/src/tts/tts_params.dart';
+import 'package:flutter_azure_tts/src/tts/tts_streaming_params.dart';
 import 'package:flutter_azure_tts/src/voices/voices.dart';
 
 export '/src/audio/audio.dart';
@@ -13,6 +16,9 @@ export '/src/voices/voices.dart';
 export '/src/common/common.dart';
 export "/src/tts/tts_params.dart";
 export '/src/tts/tts_params_builder.dart';
+export '/src/tts/tts_streaming_params.dart';
+export '/src/tts/tts_streaming_params_builder.dart';
+export '/src/audio/audio_stream.dart';
 export '/src/ssml/style_ssml.dart';
 export '/src/voices/voice_filter.dart';
 export '/src/common/azure_tts_exception.dart';
@@ -23,6 +29,17 @@ export '/src/common/retry_policy.dart';
 /// This class provides a simplified interface to Microsoft Azure's Cognitive Services
 /// Text-to-Speech API. It handles authentication, voice management, and audio generation
 /// with built-in error handling, caching, and retry mechanisms.
+/// 
+/// ## Features
+/// 
+/// - **Standard TTS**: Generate complete audio files
+/// - **Streaming TTS**: Real-time audio streaming for lower latency
+/// - **Authentication Management**: Automatic token refresh and validation
+/// - **Voice Filtering**: Advanced filtering capabilities for finding the right voice
+/// - **Error Handling**: Comprehensive exception hierarchy for different error types
+/// - **Caching**: Built-in caching for voices and audio to reduce API calls
+/// - **Retry Logic**: Configurable retry policies with exponential backoff
+/// - **Validation**: Input validation for all parameters
 /// 
 /// ## Usage
 /// 
@@ -40,6 +57,7 @@ export '/src/common/retry_policy.dart';
 /// final voices = await FlutterAzureTts.getAvailableVoices();
 /// final voice = voices.voices.first;
 /// 
+/// // Standard TTS (complete audio file)
 /// final params = TtsParamsBuilder()
 ///     .voice(voice)
 ///     .text('Hello, world!')
@@ -47,16 +65,22 @@ export '/src/common/retry_policy.dart';
 ///     .build();
 /// 
 /// final audio = await FlutterAzureTts.getTts(params);
+/// 
+/// // Streaming TTS (real-time audio chunks)
+/// final streamingParams = TtsStreamingParamsBuilder()
+///     .voice(voice)
+///     .text('Hello, streaming world!')
+///     .audioFormat(AudioOutputFormat.audio16khz32kBitrateMonoMp3)
+///     .preferredChunkSize(ChunkSize.small)
+///     .bufferStrategy(BufferStrategy.lowLatency)
+///     .build();
+/// 
+/// final audioStream = await FlutterAzureTts.getTtsStream(streamingParams);
+/// await for (final chunk in audioStream.audioStream) {
+///   // Process audio chunk in real-time
+///   audioPlayer.addChunk(chunk.data);
+/// }
 /// ```
-/// 
-/// ## Features
-/// 
-/// - **Authentication Management**: Automatic token refresh and validation
-/// - **Voice Filtering**: Advanced filtering capabilities for finding the right voice
-/// - **Error Handling**: Comprehensive exception hierarchy for different error types
-/// - **Caching**: Built-in caching for voices and audio to reduce API calls
-/// - **Retry Logic**: Configurable retry policies with exponential backoff
-/// - **Validation**: Input validation for all parameters
 /// 
 /// ## Thread Safety
 /// 
@@ -67,6 +91,9 @@ class FlutterAzureTts {
   /// Private constructor to prevent instantiation.
   /// This class is designed to be used as a static interface only.
   FlutterAzureTts._();
+
+  /// Audio stream handler for streaming TTS requests.
+  static final AudioStreamHandler _audioStreamHandler = AudioStreamHandler();
 
   /// Initializes the Azure TTS framework with improved configuration.
   /// 
@@ -240,6 +267,170 @@ class FlutterAzureTts {
     } catch (e) {
       if (e is AzureTtsException) rethrow;
       throw NetworkException('Failed to generate speech', e);
+    }
+  }
+
+  /// Converts text to speech using streaming for real-time audio delivery.
+  /// 
+  /// This method provides streaming audio generation, allowing audio playback
+  /// to start immediately as chunks become available rather than waiting for
+  /// the complete audio file. This significantly reduces perceived latency
+  /// and improves user experience for interactive applications.
+  /// 
+  /// ## Benefits of Streaming
+  /// 
+  /// - **Lower Latency**: Audio playback can start within milliseconds
+  /// - **Better User Experience**: No waiting for long texts to be fully processed
+  /// - **Memory Efficiency**: Audio is processed in chunks rather than loading everything
+  /// - **Real-time Feedback**: Progress can be shown to users
+  /// - **Scalability**: Better performance for concurrent requests
+  /// 
+  /// ## Parameters
+  /// 
+  /// - [params]: The streaming TTS parameters created using [TtsStreamingParamsBuilder].
+  ///   Includes all standard TTS parameters plus streaming-specific options.
+  /// 
+  /// ## Returns
+  /// 
+  /// An [AudioStreamResponse] containing:
+  /// - A stream of [AudioChunk] objects as they become available
+  /// - Content type information
+  /// - Estimated total size (if available)
+  /// 
+  /// ## Throws
+  /// 
+  /// - [InitializationException]: If the service hasn't been initialized.
+  /// - [ValidationException]: If the parameters are invalid for streaming.
+  /// - [AuthenticationException]: If authentication fails.
+  /// - [NetworkException]: If the streaming request fails.
+  /// - [RateLimitException]: If you've exceeded the API rate limits.
+  /// - [ServiceUnavailableException]: If Azure services are temporarily unavailable.
+  /// 
+  /// ## Example
+  /// 
+  /// ```dart
+  /// try {
+  ///   final streamingParams = TtsStreamingParamsBuilder()
+  ///       .voice(selectedVoice)
+  ///       .text('This is streaming audio that will play in real-time!')
+  ///       .audioFormat(AudioOutputFormat.audio16khz32kBitrateMonoMp3)
+  ///       .preferredChunkSize(ChunkSize.small)
+  ///       .bufferStrategy(BufferStrategy.lowLatency)
+  ///       .enableProgressTracking(true)
+  ///       .build();
+  ///   
+  ///   final audioStreamResponse = await FlutterAzureTts.getTtsStream(streamingParams);
+  ///   
+  ///   // Process audio chunks in real-time
+  ///   await for (final chunk in audioStreamResponse.audioStream) {
+  ///     print('Received chunk ${chunk.sequenceNumber}: ${chunk.size} bytes');
+  ///     
+  ///     // Add chunk to audio player for immediate playback
+  ///     audioPlayer.addChunk(chunk.data);
+  ///     
+  ///     if (chunk.isLast) {
+  ///       print('Streaming completed');
+  ///       break;
+  ///     }
+  ///   }
+  /// } on ValidationException catch (e) {
+  ///   print('Invalid streaming parameters: ${e.message}');
+  /// } on NetworkException catch (e) {
+  ///   print('Streaming failed: ${e.message}');
+  /// }
+  /// ```
+  /// 
+  /// ## Advanced Usage with Progress Tracking
+  /// 
+  /// ```dart
+  /// final streamingParams = TtsStreamingParamsBuilder.forRealtime()
+  ///     .voice(voice)
+  ///     .text(longText)
+  ///     .audioFormat(AudioOutputFormat.audio16khz32kBitrateMonoMp3)
+  ///     .build();
+  /// 
+  /// final (audioStream, progressStream) = await FlutterAzureTts.getTtsStreamWithProgress(streamingParams);
+  /// 
+  /// // Listen to progress updates for UI
+  /// progressStream.listen((progress) {
+  ///   final percent = progress.percentComplete ?? 0.0;
+  ///   updateProgressBar(percent);
+  ///   print('Progress: ${(percent * 100).toStringAsFixed(1)}%');
+  /// });
+  /// 
+  /// // Process audio chunks
+  /// await for (final chunk in audioStream.audioStream) {
+  ///   audioPlayer.addChunk(chunk.data);
+  /// }
+  /// ```
+  static Future<AudioStreamResponse> getTtsStream(TtsStreamingParams params) async {
+    if (!ConfigManager().isInitialized) {
+      throw InitializationException('Azure TTS not initialized. Call init() first.');
+    }
+    
+    try {
+      // Validate streaming parameters
+      _audioStreamHandler.validateStreamingParams(params);
+      
+      // Get streaming audio
+      return await _audioStreamHandler.getAudioStream(params);
+    } catch (e) {
+      if (e is AzureTtsException) rethrow;
+      throw NetworkException('Failed to initiate streaming TTS', e);
+    }
+  }
+
+  /// Converts text to speech using streaming with detailed progress tracking.
+  /// 
+  /// This method provides the same streaming functionality as [getTtsStream]
+  /// but includes a separate stream of progress information that can be used
+  /// for UI updates, analytics, or debugging.
+  /// 
+  /// ## Parameters
+  /// 
+  /// - [params]: The streaming TTS parameters with progress tracking enabled.
+  /// 
+  /// ## Returns
+  /// 
+  /// A tuple containing:
+  /// - [AudioStreamResponse]: The audio stream
+  /// - [Stream<StreamProgress>]: Detailed progress information
+  /// 
+  /// ## Example
+  /// 
+  /// ```dart
+  /// final (audioStream, progressStream) = await FlutterAzureTts.getTtsStreamWithProgress(params);
+  /// 
+  /// // Monitor progress
+  /// progressStream.listen((progress) {
+  ///   print('Received ${progress.bytesReceived} bytes');
+  ///   print('Speed: ${progress.bytesPerSecond.toStringAsFixed(1)} B/s');
+  ///   if (progress.percentComplete != null) {
+  ///     print('Progress: ${(progress.percentComplete! * 100).toStringAsFixed(1)}%');
+  ///   }
+  /// });
+  /// 
+  /// // Process audio
+  /// await for (final chunk in audioStream.audioStream) {
+  ///   audioPlayer.addChunk(chunk.data);
+  /// }
+  /// ```
+  static Future<(AudioStreamResponse, Stream<StreamProgress>)> getTtsStreamWithProgress(
+    TtsStreamingParams params,
+  ) async {
+    if (!ConfigManager().isInitialized) {
+      throw InitializationException('Azure TTS not initialized. Call init() first.');
+    }
+    
+    try {
+      // Validate streaming parameters
+      _audioStreamHandler.validateStreamingParams(params);
+      
+      // Get streaming audio with progress
+      return await _audioStreamHandler.getAudioStreamWithProgress(params);
+    } catch (e) {
+      if (e is AzureTtsException) rethrow;
+      throw NetworkException('Failed to initiate streaming TTS with progress', e);
     }
   }
 
