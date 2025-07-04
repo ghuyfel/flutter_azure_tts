@@ -141,7 +141,7 @@ class AzureTtsConfig {
     if (key.isEmpty) {
       throw ArgumentError('Subscription key cannot be empty');
     }
-    if (key.length != 32) {
+    if (key.length < 32) {
       throw ArgumentError('Invalid subscription key format - must be 32 characters');
     }
   }
