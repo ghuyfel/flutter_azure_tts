@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_azure_tts/flutter_azure_tts.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -35,4 +37,9 @@ class Voice {
       required this.roles});
 
   Map<String, dynamic> toJson() => _$VoiceToJson(this);
+
+  @override
+  String toString() {
+    return jsonEncode(toJson());
+  }
 }

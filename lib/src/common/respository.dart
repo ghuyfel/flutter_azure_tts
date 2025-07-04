@@ -6,6 +6,7 @@ import 'package:flutter_azure_tts/src/auth/auth.dart';
 import 'package:flutter_azure_tts/src/auth/auth_handler.dart';
 import 'package:flutter_azure_tts/src/auth/auth_token.dart';
 import 'package:flutter_azure_tts/src/common/azure_exception.dart';
+import 'package:flutter_azure_tts/src/common/azure_tts_config.dart';
 import 'package:flutter_azure_tts/src/common/config.dart';
 import 'package:flutter_azure_tts/src/tts/tts_params.dart';
 import 'package:flutter_azure_tts/src/voices/voices.dart';
@@ -64,6 +65,7 @@ class Repository {
       final authResponse = await authHandler.getAuthToken();
       if (authResponse is TokenSuccess) {
         Config.authToken = AuthToken(token: authResponse.token);
+        ConfigManager().setAuthToken(Config.authToken);
         completer.complete(true);
       } else {
         throw AzureException(response: authResponse);
