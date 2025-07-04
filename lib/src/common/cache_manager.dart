@@ -1,5 +1,3 @@
-import 'dart:async';
-
 /// Simple in-memory cache for storing temporary data with TTL (Time To Live) support.
 /// 
 /// This cache manager provides a thread-safe, memory-efficient way to store and retrieve

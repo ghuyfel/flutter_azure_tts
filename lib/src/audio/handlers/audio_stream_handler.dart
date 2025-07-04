@@ -99,7 +99,6 @@ class AudioStreamHandler {
   /// ```
   Future<AudioStreamResponse> getAudioStream(AudioRequestParams params) async {
     // Get current configuration and auth token
-    final config = ConfigManager().config;
     final authToken = ConfigManager().authToken;
     
     if (authToken == null || authToken.isExpired) {
