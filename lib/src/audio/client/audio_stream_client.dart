@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:typed_data';
-import 'package:flutter_azure_tts/flutter_azure_tts.dart';
 import 'package:flutter_azure_tts/src/audio/core/audio_type_header.dart';
+import 'package:flutter_azure_tts/src/audio/streaming/audio_stream.dart';
 import 'package:flutter_azure_tts/src/auth/authentication_types.dart';
 import 'package:flutter_azure_tts/src/common/azure_tts_exception.dart';
 import 'package:flutter_azure_tts/src/common/base_client.dart';
@@ -158,7 +157,7 @@ class AudioStreamClient extends BaseClient {
     
     int sequenceNumber = 0;
     bool isComplete = false;
-    final startTime = DateTime.now();
+    // final startTime = DateTime.now();
 
     controller = StreamController<AudioChunk>(
       onListen: () {

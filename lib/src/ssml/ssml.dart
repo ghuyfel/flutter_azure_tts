@@ -1,5 +1,5 @@
-import 'package:flutter_azure_tts/flutter_azure_tts.dart';
 import 'package:flutter_azure_tts/src/ssml/style_ssml.dart';
+import 'package:flutter_azure_tts/src/voices/voices.dart';
 
 class Ssml {
   const Ssml({
