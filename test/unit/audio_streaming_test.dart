@@ -1,4 +1,5 @@
-import 'package:flutter_azure_tts/src/audio/audio_stream.dart';
+import 'package:flutter_azure_tts/src/audio/streaming/audio_stream.dart';
+import 'package:flutter_azure_tts/src/audio/streaming/streaming_audio_buffer.dart';
 import 'package:flutter_azure_tts/src/tts/tts_streaming_params.dart';
 import 'package:flutter_azure_tts/src/tts/tts_streaming_params_builder.dart';
 import 'package:flutter_azure_tts/src/voices/voices.dart';
@@ -93,18 +94,18 @@ void main() {
     group('TtsStreamingParamsBuilder', () {
       test('should build valid streaming params', () {
         final params = TtsStreamingParamsBuilder()
-            .voice(testVoice)
-            .text('Hello streaming world')
-            .audioFormat('audio-16khz-32kbitrate-mono-mp3')
             .preferredChunkSize(ChunkSize.small)
             .bufferStrategy(BufferStrategy.lowLatency)
             .enableProgressTracking(true)
             .maxLatency(Duration(milliseconds: 300))
+            .voice(testVoice)
+            .text('Hello streaming world')
+            .audioFormat('audio-16khz-32kbitrate-mono-mp3')
             .build();
 
         expect(params.voice, equals(testVoice));
         expect(params.text, equals('Hello streaming world'));
-        expect(params.preferredChunkSize, equals(ChunkSize.small));
+        expect((params as TtsStreamingParams).preferredChunkSize, equals(ChunkSize.small));
         expect(params.bufferStrategy, equals(BufferStrategy.lowLatency));
         expect(params.enableProgressTracking, isTrue);
         expect(params.maxLatency, equals(Duration(milliseconds: 300)));
@@ -125,11 +126,12 @@ void main() {
       test('should validate incompatible chunk size and buffer strategy', () {
         expect(
           () => TtsStreamingParamsBuilder()
+              .preferredChunkSize(ChunkSize.large)
+              .bufferStrategy(BufferStrategy.lowLatency)
               .voice(testVoice)
               .text('Test')
               .audioFormat('audio-16khz-32kbitrate-mono-mp3')
-              .preferredChunkSize(ChunkSize.large)
-              .bufferStrategy(BufferStrategy.lowLatency)
+
               .build(),
           throwsArgumentError,
         );
@@ -142,7 +144,7 @@ void main() {
             .audioFormat('audio-16khz-32kbitrate-mono-mp3')
             .build();
 
-        expect(params.preferredChunkSize, equals(ChunkSize.small));
+        expect((params as TtsStreamingParams).preferredChunkSize, equals(ChunkSize.small));
         expect(params.bufferStrategy, equals(BufferStrategy.lowLatency));
         expect(params.maxLatency, equals(Duration(milliseconds: 300)));
       });
@@ -154,7 +156,7 @@ void main() {
             .audioFormat('audio-24khz-96kbitrate-mono-mp3')
             .build();
 
-        expect(params.preferredChunkSize, equals(ChunkSize.large));
+        expect((params as TtsStreamingParams).preferredChunkSize, equals(ChunkSize.large));
         expect(params.bufferStrategy, equals(BufferStrategy.highQuality));
       });
     });

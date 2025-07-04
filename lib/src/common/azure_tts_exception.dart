@@ -257,7 +257,7 @@ class RateLimitException extends AzureTtsException {
   /// 
   /// - [message]: Description of the rate limiting
   /// - [cause]: Optional underlying cause
-  const RateLimitException(super.message, [super.cause]);
+  const RateLimitException(super.message, this.retryAfter, [super.cause]);
   
   /// Duration to wait before retrying the request.
   /// 

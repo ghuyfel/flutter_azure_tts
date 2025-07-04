@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:flutter_azure_tts/src/audio/audio_stream.dart';
-import 'package:flutter_azure_tts/src/audio/audio_type_header.dart';
+import 'package:flutter_azure_tts/flutter_azure_tts.dart';
+import 'package:flutter_azure_tts/src/audio/core/audio_type_header.dart';
 import 'package:flutter_azure_tts/src/auth/authentication_types.dart';
 import 'package:flutter_azure_tts/src/common/azure_tts_exception.dart';
 import 'package:flutter_azure_tts/src/common/base_client.dart';
@@ -235,7 +235,7 @@ class AudioStreamClient extends BaseClient {
       case 403:
         throw AuthenticationException('Access forbidden: $responseBody');
       case 429:
-        throw RateLimitException('Rate limit exceeded: $responseBody');
+        throw RateLimitException('Rate limit exceeded: $responseBody', const Duration());
       case 500:
       case 502:
       case 503:

@@ -1,4 +1,4 @@
-import 'package:flutter_azure_tts/src/audio/audio_output_format.dart';
+import 'package:flutter_azure_tts/src/audio/core/audio_output_format.dart';
 import 'package:flutter_azure_tts/src/tts/tts_params_builder.dart';
 import 'package:flutter_azure_tts/src/voices/voices.dart';
 import 'package:test/test.dart';

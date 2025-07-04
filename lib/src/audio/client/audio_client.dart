@@ -1,4 +1,4 @@
-import 'package:flutter_azure_tts/src/audio/audio_type_header.dart';
+import 'package:flutter_azure_tts/src/audio/core/audio_type_header.dart';
 import 'package:flutter_azure_tts/src/auth/authentication_types.dart';
 import 'package:flutter_azure_tts/src/common/base_client.dart';
 import 'package:http/http.dart' as http;

@@ -1,7 +1,10 @@
-import 'package:flutter_azure_tts/src/audio/audio_request_param.dart';
-import 'package:flutter_azure_tts/src/audio/audio_stream.dart';
-import 'package:flutter_azure_tts/src/audio/audio_stream_client.dart';
-import 'package:flutter_azure_tts/src/audio/audio_type_header.dart';
+import 'dart:async';
+
+import 'package:flutter_azure_tts/src/common/azure_tts_exception.dart';
+import 'package:flutter_azure_tts/src/audio/core/audio_request_param.dart';
+import 'package:flutter_azure_tts/src/audio/streaming/audio_stream.dart';
+import 'package:flutter_azure_tts/src/audio/client/audio_stream_client.dart';
+import 'package:flutter_azure_tts/src/audio/core/audio_type_header.dart';
 import 'package:flutter_azure_tts/src/auth/authentication_types.dart';
 import 'package:flutter_azure_tts/src/common/azure_tts_config.dart';
 import 'package:flutter_azure_tts/src/common/constants.dart';

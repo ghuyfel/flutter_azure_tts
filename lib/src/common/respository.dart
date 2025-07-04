@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_azure_tts/src/audio/audio.dart';
-import 'package:flutter_azure_tts/src/audio/audio_handler.dart';
+import 'package:flutter_azure_tts/src/audio/handlers/audio_handler.dart';
 import 'package:flutter_azure_tts/src/auth/auth.dart';
 import 'package:flutter_azure_tts/src/auth/auth_handler.dart';
 import 'package:flutter_azure_tts/src/auth/auth_token.dart';

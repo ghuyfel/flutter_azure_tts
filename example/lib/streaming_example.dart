@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter_azure_tts/flutter_azure_tts.dart';
+import 'package:flutter_azure_tts/src/audio/client/audio_stream_client.dart';
 
 const _azureKey = 'YOUR SUBSCRIPTION KEY';
 const _azureRegion = 'YOUR REGION';
@@ -59,7 +60,7 @@ Future<void> _basicStreamingExample(Voice voice) async {
       .voice(voice)
       .text('This is a basic streaming example. The audio will be delivered in real-time chunks.')
       .audioFormat(AudioOutputFormat.audio16khz32kBitrateMonoMp3)
-      .build();
+      .build() as TtsStreamingParams;
 
   final streamResponse = await FlutterAzureTts.getTtsStream(params);
   final audioBuffer = <Uint8List>[];
@@ -85,11 +86,11 @@ Future<void> _realtimeStreamingExample(Voice voice) async {
   print('\n=== Real-time Streaming Example ===');
   
   final params = TtsStreamingParamsBuilder.forRealtime()
+      .maxLatency(Duration(milliseconds: 200))
       .voice(voice)
       .text('This is optimized for real-time playback with minimal latency!')
       .audioFormat(AudioOutputFormat.audio16khz32kBitrateMonoMp3)
-      .maxLatency(Duration(milliseconds: 200))
-      .build();
+      .build() as TtsStreamingParams;
 
   final streamResponse = await FlutterAzureTts.getTtsStream(params);
   final buffer = StreamingAudioBuffer(
@@ -131,7 +132,7 @@ Future<void> _highQualityStreamingExample(Voice voice) async {
       .voice(voice)
       .text('This example demonstrates high-quality streaming with larger buffers for smooth playback.')
       .audioFormat(AudioOutputFormat.audio24khz96kBitrateMonoMp3)
-      .build();
+      .build() as TtsStreamingParams;
 
   final streamResponse = await FlutterAzureTts.getTtsStream(params);
   final buffer = StreamingAudioBuffer(
@@ -167,13 +168,14 @@ Future<void> _streamingWithProgressExample(Voice voice) async {
   print('\n=== Streaming with Progress Tracking Example ===');
   
   final params = TtsStreamingParamsBuilder.balanced()
+      .enableProgressTracking(true)
       .voice(voice)
       .text('This example shows how to track progress during streaming. '
              'You can see real-time statistics about the streaming process including '
              'bytes received, throughput, and completion percentage.')
       .audioFormat(AudioOutputFormat.audio16khz64kBitrateMonoMp3)
-      .enableProgressTracking(true)
-      .build();
+
+      .build() as TtsStreamingParams;
 
   final (streamResponse, progressStream) = await FlutterAzureTts.getTtsStreamWithProgress(params);
   final audioBuffer = <Uint8List>[];

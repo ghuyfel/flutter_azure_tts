@@ -5,6 +5,7 @@ import 'package:flutter_azure_tts/src/audio/streaming/audio_stream.dart';
 import 'package:flutter_azure_tts/src/audio/handlers/audio_stream_handler.dart';
 import 'package:flutter_azure_tts/src/common/azure_tts_config.dart';
 import 'package:flutter_azure_tts/src/common/azure_tts_exception.dart';
+import 'package:flutter_azure_tts/src/common/retry_policy.dart';
 import 'package:flutter_azure_tts/src/tts/tts.dart';
 import 'package:flutter_azure_tts/src/tts/tts_params.dart';
 import 'package:flutter_azure_tts/src/tts/tts_streaming_params.dart';
